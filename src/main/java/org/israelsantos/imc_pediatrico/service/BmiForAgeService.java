@@ -3,47 +3,49 @@ package org.israelsantos.imc_pediatrico.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WeightForAgeService implements GrowthCalculator {
+public class BmiForAgeService implements GrowthCalculator {
 
     private final double[] plus3Boys = {
-            5.0, 13.3, 17.1, 20.7, 24.2, 27.9
+            18.1, 21.6, 20.3, 20.0, 19.9, 20.3
     };
 
     private final double[] plus2Boys = {
-            4.4, 12.0, 15.3, 18.3, 21.5, 24.2
+            16.3, 19.8, 18.5, 18.4, 18.2, 18.3
     };
 
     private final double[] medianBoys = {
-            3.3, 9.6, 12.2, 14.3, 16.3, 18.3
+            13.4, 16.8, 15.7, 15.6, 15.3, 15.2
     };
 
     private final double[] minus2Boys = {
-            2.5, 7.7, 9.7, 11.3, 12.7, 14.1
+            11.1, 14.4, 13.6, 13.4, 13.1, 12.9
     };
 
     private final double[] minus3Boys = {
-            2.1, 6.9, 8.6, 10.0, 11.3, 12.4
+            10.2, 13.4, 12.7, 12.4, 12.1, 12.0
     };
 
+
     private final double[] plus3Girls = {
-            4.8, 13.1, 16.7, 20.4, 24.0, 27.8
+            17.7, 21.6, 20.3, 20.3, 20.6, 21.1
     };
 
     private final double[] plus2Girls = {
-            4.2, 11.5, 14.8, 17.9, 21.2, 24.2
+            16.1, 19.6, 18.4, 18.4, 18.5, 18.8
     };
 
     private final double[] medianGirls = {
-            3.2, 8.9, 11.5, 13.9, 16.1, 18.2
+            13.3, 16.4, 15.4, 15.4, 15.3, 15.3
     };
 
     private final double[] minus2Girls = {
-            2.4, 7.0, 9.0, 10.8, 12.3, 13.7
+            11.1, 13.8, 13.1, 13.1, 12.8, 12.7
     };
 
     private final double[] minus3Girls = {
-            2.0, 6.3, 8.1, 9.8, 11.1, 12.4
+            10.1, 12.7, 12.1, 12.1, 11.8, 11.6
     };
+
 
     public double interpolate(double[] values, double age) {
 
@@ -72,11 +74,13 @@ public class WeightForAgeService implements GrowthCalculator {
         return Math.round(result * 100.0) / 100.0;
     }
 
+
     private boolean isGirl(String gender) {
 
         return "FEMALE".equalsIgnoreCase(gender)
                 || "GIRL".equalsIgnoreCase(gender);
     }
+
 
     public double getPlus3(double age, String gender) {
 
@@ -87,6 +91,7 @@ public class WeightForAgeService implements GrowthCalculator {
         return interpolate(values, age);
     }
 
+
     public double getPlus2(double age, String gender) {
 
         double[] values = isGirl(gender)
@@ -95,6 +100,7 @@ public class WeightForAgeService implements GrowthCalculator {
 
         return interpolate(values, age);
     }
+
 
     public double getMedian(double age, String gender) {
 
@@ -105,6 +111,7 @@ public class WeightForAgeService implements GrowthCalculator {
         return interpolate(values, age);
     }
 
+
     public double getMinus2(double age, String gender) {
 
         double[] values = isGirl(gender)
@@ -113,6 +120,7 @@ public class WeightForAgeService implements GrowthCalculator {
 
         return interpolate(values, age);
     }
+
 
     public double getMinus3(double age, String gender) {
 
@@ -123,32 +131,39 @@ public class WeightForAgeService implements GrowthCalculator {
         return interpolate(values, age);
     }
 
+
     @Override
-    public String classify(double weight, double age, String gender) {
+    public String classify(double bmi, double age, String gender) {
 
-        double weightPlus3 = getPlus3(age, gender);
-        double weightPlus2 = getPlus2(age, gender);
-        double weightMedian = getMedian(age, gender);
-        double weightMinus2 = getMinus2(age, gender);
-        double weightMinus3 = getMinus3(age, gender);
+        double bmiPlus3 = getPlus3(age, gender);
+        double bmiPlus2 = getPlus2(age, gender);
+        double bmiMedian = getMedian(age, gender);
+        double bmiMinus2 = getMinus2(age, gender);
+        double bmiMinus3 = getMinus3(age, gender);
 
-        if (weight > weightPlus3) {
+        if (bmi > bmiPlus3) {
+
             return "Above +3 SD - The child is obese.";
 
-        } else if (weight > weightPlus2) {
-            return "Between +3 and +2 SD - The child is at higher risk of an excess-related disorder; possible overweight.";
+        } else if (bmi > bmiPlus2) {
 
-        } else if (weight > weightMedian) {
-            return "Between +2 and 0 SD - The child is within the normal weight range for their age.";
+            return "Between +3 and +2 SD - The child is overweight.";
 
-        } else if (weight > weightMinus2) {
-            return "Between 0 and -2 SD - The child is within the normal weight range for their age.";
+        } else if (bmi > bmiMedian) {
 
-        } else if (weight > weightMinus3) {
+            return "Between +2 and 0 SD - The child is within the normal BMI range.";
+
+        } else if (bmi > bmiMinus2) {
+
+            return "Between 0 and -2 SD - The child is within the normal BMI range.";
+
+        } else if (bmi > bmiMinus3) {
+
             return "Between -2 and -3 SD - The child is underweight and may be at risk of malnutrition.";
 
         } else {
-            return "Below -3 SD - The child is malnourished.";
+
+            return "Below -3 SD - The child is severely underweight and may be at risk of malnutrition.";
         }
     }
 }

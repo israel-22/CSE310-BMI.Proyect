@@ -1,17 +1,19 @@
 package org.israelsantos.imc_pediatrico;
 
-import org.israelsantos.imc_pediatrico.service.WeightForAgeService;
+import org.israelsantos.imc_pediatrico.service.BmiForAgeService;
 
-public class WeightForAgeTest {
+public class BmiForAgeTest {
 
     public static void main(String[] args) {
 
-        WeightForAgeService service = new WeightForAgeService();
+        BmiForAgeService service = new BmiForAgeService();
 
         double age = 2.5;
+        double bmi = 15.88;
 
-        System.out.println("Weight-for-Age test");
+        System.out.println("BMI-for-Age test");
         System.out.println("Age: " + age + " years");
+        System.out.println("BMI: " + bmi);
 
         System.out.println();
         System.out.println("BOY:");
@@ -31,6 +33,7 @@ public class WeightForAgeTest {
         System.out.println("Minus 3 SD: "
                 + service.getMinus3(age, "MALE"));
 
+
         System.out.println();
         System.out.println("GIRL:");
 
@@ -49,13 +52,14 @@ public class WeightForAgeTest {
         System.out.println("Minus 3 SD: "
                 + service.getMinus3(age, "FEMALE"));
 
+
         System.out.println();
         System.out.println("Classification test:");
 
         System.out.println("Boy: "
-                + service.classify(15.0, age, "MALE"));
+                + service.classify(bmi, age, "MALE"));
 
         System.out.println("Girl: "
-                + service.classify(15.0, age, "FEMALE"));
+                + service.classify(bmi, age, "FEMALE"));
     }
 }

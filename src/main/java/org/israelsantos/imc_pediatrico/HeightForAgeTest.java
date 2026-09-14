@@ -1,16 +1,16 @@
 package org.israelsantos.imc_pediatrico;
 
-import org.israelsantos.imc_pediatrico.service.WeightForAgeService;
+import org.israelsantos.imc_pediatrico.service.HeightForAgeService;
 
-public class WeightForAgeTest {
+public class HeightForAgeTest {
 
     public static void main(String[] args) {
 
-        WeightForAgeService service = new WeightForAgeService();
+        HeightForAgeService service = new HeightForAgeService();
 
         double age = 2.5;
 
-        System.out.println("Weight-for-Age test");
+        System.out.println("Height-for-Age test");
         System.out.println("Age: " + age + " years");
 
         System.out.println();
@@ -31,6 +31,7 @@ public class WeightForAgeTest {
         System.out.println("Minus 3 SD: "
                 + service.getMinus3(age, "MALE"));
 
+
         System.out.println();
         System.out.println("GIRL:");
 
@@ -49,13 +50,14 @@ public class WeightForAgeTest {
         System.out.println("Minus 3 SD: "
                 + service.getMinus3(age, "FEMALE"));
 
+
         System.out.println();
         System.out.println("Classification test:");
 
         System.out.println("Boy: "
-                + service.classify(15.0, age, "MALE"));
+                + service.classify(95.0, age, "MALE"));
 
         System.out.println("Girl: "
-                + service.classify(15.0, age, "FEMALE"));
+                + service.classify(95.0, age, "FEMALE"));
     }
 }
