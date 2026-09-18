@@ -1,0 +1,18 @@
+Module 2 – SQL Relational Databases
+
+Requirement 1:
+Relational database with tables.
+Implemented using children and controls.
+
+Requirement 2:
+INSERT, SELECT, UPDATE and DELETE operations.
+Verified through Spring Boot REST endpoints and MySQL.
+
+Requirement 3:
+JOIN between two tables.
+Implemented using a native SQL JOIN between children and controls.
+
+Verification:
+The CRUD operations were tested using Postman and verified in MySQL Workbench.
+The JOIN was tested with Juan and Maria.
+;)

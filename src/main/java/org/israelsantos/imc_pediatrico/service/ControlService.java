@@ -2,9 +2,11 @@ package org.israelsantos.imc_pediatrico.service;
 
 import org.israelsantos.imc_pediatrico.entity.Children;
 import org.israelsantos.imc_pediatrico.entity.Control;
+import org.israelsantos.imc_pediatrico.projection.ChildControlView;
 import org.israelsantos.imc_pediatrico.repository.ControlRepository;
 import org.israelsantos.imc_pediatrico.repository.ChildrenRepository;
 import org.springframework.stereotype.Service;
+
 
 
 import java.util.List;
@@ -111,6 +113,10 @@ public class ControlService {
     }
     public List<Control> findByChildIdentification(String identification) {
         return controlRepository.findByChildIdentification(identification);
+    }
+
+    public List<ChildControlView> findChildControlHistory(String identification) {
+        return controlRepository.findChildControlHistory(identification);
     }
 
     public Optional<Control> update(Long id, Control updatedControl) {

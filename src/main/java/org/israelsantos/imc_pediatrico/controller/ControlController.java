@@ -1,6 +1,7 @@
 package org.israelsantos.imc_pediatrico.controller;
 
 import org.israelsantos.imc_pediatrico.entity.Control;
+import org.israelsantos.imc_pediatrico.projection.ChildControlView;
 import org.israelsantos.imc_pediatrico.service.ControlService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -73,5 +74,12 @@ public class ControlController {
     @GetMapping("/api/controls/average-bmi")
     public double getAverageBmi() {
         return controlService.calculateAverageBmi();
+    }
+
+    @GetMapping("/api/children/{identification}/history")
+    public List<ChildControlView> getChildControlHistory(
+            @PathVariable String identification) {
+
+        return controlService.findChildControlHistory(identification);
     }
 }
