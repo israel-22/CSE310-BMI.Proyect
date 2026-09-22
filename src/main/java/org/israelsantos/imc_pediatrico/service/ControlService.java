@@ -137,16 +137,56 @@ public class ControlService {
             control.setOxygenSaturation(updatedControl.getOxygenSaturation());
             control.setTemperature(updatedControl.getTemperature());
             control.setHemoglobin(updatedControl.getHemoglobin());
-            control.setHeightForAgeResult(updatedControl.getHeightForAgeResult());
-            control.setWeightForAgeResult(updatedControl.getWeightForAgeResult());
-            control.setBmiForAgeResult(updatedControl.getBmiForAgeResult());
+
             control.setDiet(updatedControl.getDiet());
             control.setMealsPerDay(updatedControl.getMealsPerDay());
+
             double bmi = bmiService.calculateBmi(
                     updatedControl.getWeight(),
                     updatedControl.getHeight()
             );
+
             control.setBmi(bmi);
+
+            Children child = control.getChild();
+
+            Age age = ageService.calculateAge(
+                    child.getBirthDate(),
+                    control.getControlDate()
+            );
+
+            if (age.getTotalMonths() > 60) {
+                throw new IllegalArgumentException(
+                        "The child's age must be between 0 and 5 years"
+                );
+            }
+
+            double ageInYears =
+                    age.getYears() + (age.getMonths() / 12.0);
+
+            String gender = child.getGender();
+
+            String weightResult = weightForAgeService.classify(
+                    control.getWeight(),
+                    ageInYears,
+                    gender
+            );
+
+            String heightResult = heightForAgeService.classify(
+                    control.getHeight(),
+                    ageInYears,
+                    gender
+            );
+
+            String bmiResult = bmiForAgeService.classify(
+                    bmi,
+                    ageInYears,
+                    gender
+            );
+
+            control.setWeightForAgeResult(weightResult);
+            control.setHeightForAgeResult(heightResult);
+            control.setBmiForAgeResult(bmiResult);
 
             return Optional.of(controlRepository.save(control));
         }

@@ -14,11 +14,53 @@
 <div id="child-record">
     <p>Loading child...</p>
 </div>
+<h2>Controls</h2>
+<div id="controls-list">
+<p> Loading controls...</p>
+</div>
+
+<h2>Add Control</h2>
+
+<form id="control-form">
+
+    <label for="control-date">Date:</label>
+    <input type="date" id="control-date" required>
+
+    <br><br>
+
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight" step="0.1" required>
+
+    <br><br>
+
+    <label for="height">Height (cm):</label>
+    <input type="number" id="height" step="0.1" required>
+
+    <br><br>
+
+    <button type="submit">Save Control</button>
+
+</form>
+
+
+
+
 
 <script src="/js/app.js"></script>
+<!--<script>
+    loadChildRecord();
+    loadChildControls();
+     document
+        .getElementById('control-form')
+        .addEventListener('submit', function(event) {
+            event.preventDefault();
+            createControl();
+        });
+</script>-->
 <script>
     loadChildRecord();
+    loadChildControls();
+    loadChildHistory();
 </script>
-
 </body>
 </html>
