@@ -15,7 +15,14 @@ public class ChildrenService {
     public ChildrenService(ChildrenRepository childrenRepository) {
         this.childrenRepository = childrenRepository;
     }
-    public Children save(Children child){
+    public Children save(Children child) {
+
+        if (childrenRepository.existsById(child.getIdentification())) {
+            throw new IllegalArgumentException(
+                    "A child with this identification already exists"
+            );
+        }
+
         return childrenRepository.save(child);
     }
     public List<Children> findAll() {

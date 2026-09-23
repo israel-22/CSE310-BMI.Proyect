@@ -4,6 +4,9 @@ import org.springframework.web.bind.annotation.*;
 import org.israelsantos.imc_pediatrico.service.ChildrenService;
 import org.israelsantos.imc_pediatrico.entity.Children;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -54,8 +57,20 @@ public class ChildrenController {
     }
 
     @PostMapping("/api/children")
-    public Children createChild(@RequestBody Children child) {
-        return childrenService.save(child);
+    public ResponseEntity<Children> createChild(@RequestBody Children child) {
+
+        try {
+
+            Children savedChild = childrenService.save(child);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedChild);
+
+        } catch (IllegalArgumentException e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .build();
+        }
     }
 
     @DeleteMapping("/api/children/{identification}")

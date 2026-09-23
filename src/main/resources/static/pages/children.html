@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Children</title>
 </head>
 
@@ -10,11 +11,118 @@
 
 <h1>Children</h1>
 
-<div id="children-list">
-    <p>Loading children...</p>
-</div>
+<section>
+
+    <h2>Child Registration</h2>
+
+    <form id="child-form">
+
+        <label for="identification">Identification:</label>
+        <input type="text" id="identification" required>
+
+        <br><br>
+
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" required>
+
+        <br><br>
+
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" required>
+
+        <br><br>
+
+        <label for="birth-date">Birth Date:</label>
+        <input type="date" id="birth-date" required>
+
+        <br><br>
+
+        <label>Gender:</label>
+
+        <input
+                type="radio"
+                id="male"
+                name="gender"
+                value="Male"
+                required
+        >
+        <label for="male">Male</label>
+
+        <input
+                type="radio"
+                id="female"
+                name="gender"
+                value="Female"
+        >
+        <label for="female">Female</label>
+
+        <br><br>
+
+        <label for="family-history">Family History:</label>
+        <textarea id="family-history"></textarea>
+
+        <br><br>
+
+        <label for="personal-history">Personal History:</label>
+        <textarea id="personal-history"></textarea>
+
+        <br><br>
+
+        <button type="submit">Save Child</button>
+        <button type="button" id="update-child-button" disabled>
+            Update Child
+        </button>
+        <button type="button" id="delete-child-button" disabled>
+            Delete Child
+        </button>
+
+    </form>
+
+</section>
+
+<hr>
+
+<section>
+
+    <h2>Registered Children</h2>
+
+    <div id="children-list">
+        <p>Loading children...</p>
+    </div>
+
+</section>
 
 <script src="/js/app.js"></script>
+
+<script>
+    document
+        .getElementById('child-form')
+        .addEventListener('submit', function(event) {
+
+            event.preventDefault();
+
+            createChild();
+        });
+</script>
+
+<script>
+    document
+        .getElementById('update-child-button')
+        .addEventListener('click', function() {
+
+            updateChild();
+
+        });
+</script>
+<script>
+    document
+        .getElementById('delete-child-button')
+        .addEventListener('click', function() {
+
+            deleteChild();
+
+        });
+</script>
 
 </body>
 </html>
