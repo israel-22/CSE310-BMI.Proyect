@@ -271,48 +271,121 @@ async function loadChildRecord() {
 }
 
 async function loadChildControls() {
-     const params = new URLSearchParams(window.location.search);
-     const identification = params.get('id');
+    const params = new URLSearchParams(window.location.search);
+    const identification = params.get('id');
 
-     if(!identification){
-         console.error('Child identification is missing');
-         return;
-     }
-     try{
-         const response = await fetch(`/api/children/${identification}/controls`);
+    if (!identification) {
+        console.error('Child identification is missing');
+        return;
+    }
 
-         if(!response.ok){
-             throw new Error('Failed to load child controls');
-         }
-         const controls = await response.json();
-         console.log('Controls received from Spring Boot:', controls);
-         const list = document.getElementById('controls-list');
-         list.innerHTML='';
+    try {
+        const response =
+            await fetch(`/api/children/${identification}/controls`);
 
-          controls.forEach(control =>{
-              const controlElement = document.createElement('div');
-              controlElement.innerHTML=`
-              <p>
-               <strong>Date:</strong> ${control.controlDate}
-               <br>
-               <strong>Weight:</strong> ${control.weight} kg
-               <br>
-               <strong>Height:</strong> ${control.height} cm
-               <br>
-               <strong>BMI:</strong> ${control.bmi}
-               </p>
-               <hr>
-              `;
-     list.appendChild(controlElement);
-          });
+        if (!response.ok) {
+            throw new Error('Failed to load child controls');
+        }
 
-     }catch(error){
-         console.error('Error:', error);
-     }
+        const controls = await response.json();
 
+        console.log('Controls received from Spring Boot:', controls);
+
+        const list = document.getElementById('controls-list');
+
+        list.innerHTML = '';
+        console.log('Controls list cleared');
+
+        if (controls.length === 0) {
+            list.innerHTML = '<p>No control records found.</p>';
+            return;
+        }
+
+        controls.forEach(control => {
+
+            const controlElement = document.createElement('div');
+
+            controlElement.innerHTML = `
+                <h3>Control Date: ${control.controlDate}</h3>
+
+                <p>
+                    <strong>Weight:</strong> ${control.weight} kg
+                    <br>
+                    <strong>Height:</strong> ${control.height} cm
+                    <br>
+                    <strong>BMI:</strong> ${control.bmi}
+                </p>
+
+                <p>
+                    <strong>Head Circumference:</strong>
+                    ${control.headCircumference ?? 'Not recorded'} cm
+                    <br>
+
+                    <strong>Thoracic Circumference:</strong>
+                    ${control.thoracicCircumference ?? 'Not recorded'} cm
+                    <br>
+
+                    <strong>Abdominal Circumference:</strong>
+                    ${control.abdominalCircumference ?? 'Not recorded'} cm
+                </p>
+
+                <p>
+                    <strong>Heart Rate:</strong>
+                    ${control.heartRate ?? 'Not recorded'} bpm
+                    <br>
+
+                    <strong>Respiratory Rate:</strong>
+                    ${control.respiratoryRate ?? 'Not recorded'} breaths/min
+                    <br>
+
+                    <strong>Oxygen Saturation:</strong>
+                    ${control.oxygenSaturation ?? 'Not recorded'}%
+                    <br>
+
+                    <strong>Temperature:</strong>
+                    ${control.temperature ?? 'Not recorded'} °C
+                    <br>
+
+                    <strong>Hemoglobin:</strong>
+                    ${control.hemoglobin ?? 'Not recorded'} g/dL
+                </p>
+
+                <p>
+                    <strong>Diet:</strong>
+                    ${control.diet ?? 'Not recorded'}
+                    <br>
+
+                    <strong>Meals per Day:</strong>
+                    ${control.mealsPerDay ?? 'Not recorded'}
+                </p>
+
+                <p>
+                    <strong>Weight for Age:</strong>
+                    ${control.weightForAgeResult ?? 'Not calculated'}
+                    <br>
+
+                    <strong>Height for Age:</strong>
+                    ${control.heightForAgeResult ?? 'Not calculated'}
+                    <br>
+
+                    <strong>BMI for Age:</strong>
+                    ${control.bmiForAgeResult ?? 'Not calculated'}
+                </p>
+                  <button type="button" onclick="selectControl(${control.id})">Edit</button>
+                  <button type="button">Delete</button>
+
+                   <hr>
+            `;
+
+            list.appendChild(controlElement);
+        });
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
-
 async function createControl() {
+
     const params = new URLSearchParams(window.location.search);
     const identification = params.get('id');
 
@@ -322,21 +395,85 @@ async function createControl() {
     }
 
     const control = {
-        controlDate: document.getElementById('control-date').value,
-        weight: parseFloat(document.getElementById('weight').value),
-        height: parseFloat(document.getElementById('height').value),
+
+        controlDate:
+            document.getElementById('control-date').value,
+
+        weight:
+            parseFloat(document.getElementById('weight').value),
+
+        height:
+            parseFloat(document.getElementById('height').value),
+
+        headCircumference:
+            parseFloat(
+                document.getElementById('head-circumference').value
+            ) || null,
+
+        thoracicCircumference:
+            parseFloat(
+                document.getElementById('thoracic-circumference').value
+            ) || null,
+
+        abdominalCircumference:
+            parseFloat(
+                document.getElementById('abdominal-circumference').value
+            ) || null,
+
+        heartRate:
+            parseInt(
+                document.getElementById('heart-rate').value
+            ) || null,
+
+        respiratoryRate:
+            parseInt(
+                document.getElementById('respiratory-rate').value
+            ) || null,
+
+        oxygenSaturation:
+            parseInt(
+                document.getElementById('oxygen-saturation').value
+            ) || null,
+
+        temperature:
+            parseFloat(
+                document.getElementById('temperature').value
+            ) || null,
+
+        hemoglobin:
+            parseFloat(
+                document.getElementById('hemoglobin').value
+            ) || null,
+
+        diet:
+            document.getElementById('diet').value || null,
+
+        mealsPerDay:
+            document.getElementById('meals-per-day').value
+                ? parseInt(
+                    document.getElementById('meals-per-day').value
+                )
+                : null,
+
         child: {
             identification: identification
         }
     };
 
+    console.log('Control to send:', control);
+
     try {
+
         const response = await fetch('/api/controls', {
+
             method: 'POST',
+
             headers: {
                 'Content-Type': 'application/json'
             },
+
             body: JSON.stringify(control)
+
         });
 
         if (!response.ok) {
@@ -349,12 +486,17 @@ async function createControl() {
 
         alert('Control saved successfully');
 
-        document.getElementById('control-form').reset();
+        document
+            .getElementById('control-form')
+            .reset();
 
         loadChildControls();
+        loadChildHistory();
 
     } catch (error) {
+
         console.error('Error:', error);
+
     }
 }
 
@@ -462,8 +604,69 @@ async function createChild() {
 
     }
 }
+async function selectControl(id) {
 
+    console.log('Control selected:', id);
 
+    try {
+
+        const response = await fetch(`/api/controls/${id}`);
+
+        if (!response.ok) {
+            throw new Error('Failed to load control');
+        }
+
+        const control = await response.json();
+
+        console.log('Control received:', control);
+
+        document.getElementById('control-date').value =
+            control.controlDate || '';
+
+        document.getElementById('weight').value =
+            control.weight ?? '';
+
+        document.getElementById('height').value =
+            control.height ?? '';
+
+        document.getElementById('head-circumference').value =
+            control.headCircumference ?? '';
+
+        document.getElementById('thoracic-circumference').value =
+            control.thoracicCircumference ?? '';
+
+        document.getElementById('abdominal-circumference').value =
+            control.abdominalCircumference ?? '';
+
+        document.getElementById('heart-rate').value =
+            control.heartRate ?? '';
+
+        document.getElementById('respiratory-rate').value =
+            control.respiratoryRate ?? '';
+
+        document.getElementById('oxygen-saturation').value =
+            control.oxygenSaturation ?? '';
+
+        document.getElementById('temperature').value =
+            control.temperature ?? '';
+
+        document.getElementById('hemoglobin').value =
+            control.hemoglobin ?? '';
+
+        document.getElementById('diet').value =
+            control.diet ?? '';
+
+        document.getElementById('meals-per-day').value =
+            control.mealsPerDay ?? '';
+
+        console.log('Control loaded into form');
+
+    } catch (error) {
+
+        console.error('Error:', error);
+
+    }
+}
 
 
 

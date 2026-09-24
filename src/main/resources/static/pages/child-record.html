@@ -38,6 +38,72 @@
 
     <br><br>
 
+    <label for="head-circumference">Head Circumference (cm):</label>
+    <input type="number" id="head-circumference" step="0.1">
+
+    <br><br>
+
+    <label for="thoracic-circumference">Thoracic Circumference (cm):</label>
+    <input type="number" id="thoracic-circumference" step="0.1">
+
+    <br><br>
+
+    <label for="abdominal-circumference">Abdominal Circumference (cm):</label>
+    <input type="number" id="abdominal-circumference" step="0.1">
+
+    <br><br>
+
+    <label for="heart-rate">Heart Rate (bpm):</label>
+    <input type="number" id="heart-rate">
+
+    <br><br>
+
+    <label for="respiratory-rate">Respiratory Rate (breaths/min):</label>
+    <input type="number" id="respiratory-rate">
+
+    <br><br>
+
+    <label for="oxygen-saturation">Oxygen Saturation (%):</label>
+    <input type="number" id="oxygen-saturation">
+
+    <br><br>
+
+    <label for="temperature">Temperature (°C):</label>
+    <input type="number" id="temperature" step="0.1">
+
+    <br><br>
+
+    <label for="hemoglobin">Hemoglobin (g/dL):</label>
+    <input type="number" id="hemoglobin" step="0.1">
+
+    <br><br>
+
+    <label for="diet">Diet:</label>
+    <select id="diet">
+
+        <option value="">Select diet</option>
+        <option value="Hypercaloric">Hypercaloric</option>
+        <option value="Hypocaloric">Hypocaloric</option>
+        <option value="Mediterranean Infant">Mediterranean Infant</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="meals-per-day">Meals per Day:</label>
+    <select id="meals-per-day">
+
+        <option value="">Select</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+
+    </select>
+    <br><br>
+
     <button type="submit">Save Control</button>
 
 </form>
@@ -47,20 +113,25 @@
 
 
 <script src="/js/app.js"></script>
-<!--<script>
+
+<script>
+
     loadChildRecord();
+
     loadChildControls();
-     document
+
+    loadChildHistory();
+
+    document
         .getElementById('control-form')
         .addEventListener('submit', function(event) {
+
             event.preventDefault();
+
             createControl();
+
         });
-</script>-->
-<script>
-    loadChildRecord();
-    loadChildControls();
-    loadChildHistory();
+
 </script>
 </body>
 </html>
