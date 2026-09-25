@@ -1,18 +1,124 @@
-Module 2 – SQL Relational Databases
+# Module 2 – SQL Relational Databases
 
-Requirement 1:
-Relational database with tables.
-Implemented using children and controls.
+## Requirement 1: Relational database with tables
 
-Requirement 2:
-INSERT, SELECT, UPDATE and DELETE operations.
-Verified through Spring Boot REST endpoints and MySQL.
+The application uses a MySQL relational database named `imc_pediatrico`.
 
-Requirement 3:
-JOIN between two tables.
-Implemented using a native SQL JOIN between children and controls.
+The database contains two main tables:
 
-Verification:
-The CRUD operations were tested using Postman and verified in MySQL Workbench.
-The JOIN was tested with Juan and Maria.
-;)
+* `children`
+* `controls`
+
+The `children` table stores the child's personal and demographic information.
+
+The `controls` table stores medical control records, including date, weight, height, BMI, vital signs, dietary information, and growth classifications.
+
+The tables have a one-to-many relationship:
+
+```text
+children
+    |
+    | 1:N
+    |
+controls
+```
+
+The `identification` field from `children` is used as the primary key and is referenced by `controls.child_id`.
+
+---
+
+## Requirement 2: INSERT, SELECT, UPDATE and DELETE operations
+
+The application implements complete CRUD operations through Spring Boot REST endpoints connected to MySQL.
+
+### Children
+
+* `POST /api/children` — INSERT
+* `GET /api/children` — SELECT
+* `GET /api/children/{identification}` — SELECT one child
+* `PUT /api/children/{identification}` — UPDATE
+* `DELETE /api/children/{identification}` — DELETE
+
+### Controls
+
+* `POST /api/controls` — INSERT
+* `GET /api/controls` — SELECT
+* `GET /api/controls/{id}` — SELECT one control
+* `PUT /api/controls/{id}` — UPDATE
+* `DELETE /api/controls/{id}` — DELETE
+
+The control CRUD operations were also tested directly from the web application.
+
+When a control is created, the application calculates the BMI and stores it in the database.
+
+When an existing control is updated, the application uses the control ID and sends a `PUT` request to update the existing database record rather than creating a new record.
+
+When a control is deleted, the corresponding record is removed from MySQL and the control list is refreshed.
+
+---
+
+## Requirement 3: JOIN between two tables
+
+The application implements a native SQL `JOIN` between the `children` and `controls` tables.
+
+The JOIN is used to retrieve a child's complete control history:
+
+```sql
+SELECT
+    c.identification,
+    c.first_name,
+    c.last_name,
+    c.gender,
+    c.birth_date,
+    co.control_date,
+    co.weight,
+    co.height,
+    co.bmi
+FROM children c
+JOIN controls co
+    ON c.identification = co.child_id
+WHERE c.identification = :identification
+ORDER BY co.control_date;
+```
+
+The result is used by the application to display the child's control history.
+
+---
+
+## Verification
+
+The database operations were verified using:
+
+* Spring Boot REST endpoints
+* The web application
+* Postman
+* MySQL Workbench
+
+CRUD operations were tested with real records in the `children` and `controls` tables.
+
+The JOIN was tested using child records such as Juan and Maria.
+
+The control CRUD workflow was also verified from the web application:
+
+```text
+Web Application
+       ↓
+Spring Boot REST API
+       ↓
+Service Layer
+       ↓
+Repository
+       ↓
+MySQL
+```
+
+The final implementation demonstrates:
+
+* INSERT
+* SELECT
+* UPDATE
+* DELETE
+* Relational tables
+* One-to-many relationship
+* SQL JOIN
+* Database results being retrieved and used by the application

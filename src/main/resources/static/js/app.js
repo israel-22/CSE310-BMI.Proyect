@@ -372,7 +372,7 @@ async function loadChildControls() {
                     ${control.bmiForAgeResult ?? 'Not calculated'}
                 </p>
                   <button type="button" onclick="selectControl(${control.id})">Edit</button>
-                  <button type="button">Delete</button>
+                  <button type="button" onclick="deleteControl(${control.id})">Delete</button>
 
                    <hr>
             `;
@@ -388,6 +388,19 @@ async function createControl() {
 
     const params = new URLSearchParams(window.location.search);
     const identification = params.get('id');
+
+   const controlId =
+       document.getElementById('control-id').value;
+
+   console.log('Control ID before save:', controlId);
+
+   const url = controlId
+       ? `/api/controls/${controlId}`
+       : '/api/controls';
+
+   const method = controlId
+       ? 'PUT'
+       : 'POST';
 
     if (!identification) {
         console.error('Child identification is missing');
@@ -464,9 +477,17 @@ async function createControl() {
 
     try {
 
-        const response = await fetch('/api/controls', {
+        const url = controlId
+            ? `/api/controls/${controlId}`
+            : '/api/controls';
 
-            method: 'POST',
+        const method = controlId
+            ? 'PUT'
+            : 'POST';
+
+        const response = await fetch(url, {
+
+            method: method,
 
             headers: {
                 'Content-Type': 'application/json'
@@ -490,6 +511,11 @@ async function createControl() {
             .getElementById('control-form')
             .reset();
 
+            document.getElementById('control-id').value = '';
+
+            document.getElementById('save-control-button').textContent =
+                'Save Control';
+
         loadChildControls();
         loadChildHistory();
 
@@ -501,7 +527,7 @@ async function createControl() {
 }
 
 
-
+////lOAD HISTORY
 async function loadChildHistory() {
     const params = new URLSearchParams(window.location.search);
     const identification = params.get('id');
@@ -555,6 +581,7 @@ async function createChild() {
             document.querySelector('input[name="gender"]:checked');
 
         const child = {
+
             identification: identification,
 
             firstName:
@@ -577,11 +604,15 @@ async function createChild() {
         };
 
         const response = await fetch('/api/children', {
+
             method: 'POST',
+
             headers: {
                 'Content-Type': 'application/json'
             },
+
             body: JSON.stringify(child)
+
         });
 
         if (!response.ok) {
@@ -594,7 +625,9 @@ async function createChild() {
 
         alert('Child saved successfully');
 
-        document.getElementById('child-form').reset();
+        document
+            .getElementById('child-form')
+            .reset();
 
         loadChildren();
 
@@ -619,6 +652,13 @@ async function selectControl(id) {
         const control = await response.json();
 
         console.log('Control received:', control);
+
+
+        document.getElementById('control-id').value = control.id;
+        console.log('Editing control ID:', control.id);
+        console.log('Hidden field value:', document.getElementById('control-id').value);
+        document.getElementById('save-control-button').textContent =
+            'Update Control';
 
         document.getElementById('control-date').value =
             control.controlDate || '';
@@ -669,7 +709,41 @@ async function selectControl(id) {
 }
 
 
+async function deleteControl(id) {
 
+    console.log('Control selected for deletion:', id);
+
+    const confirmed =
+        confirm('Are you sure you want to delete this control?');
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/controls/${id}`, {
+                method: 'DELETE'
+            });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete control');
+        }
+
+        console.log('Control deleted:', id);
+
+        alert('Control deleted successfully');
+
+        loadChildControls();
+        loadChildHistory();
+
+    } catch (error) {
+
+        console.error('Error:', error);
+
+    }
+}
 
 
 
