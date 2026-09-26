@@ -1,3 +1,4 @@
+// funtion for loading children
 async function loadChildren() {
 
     try {
@@ -70,7 +71,7 @@ async function loadChildren() {
 
 loadChildren();
 
-
+// function for selecting a child and populating the form
 function selectChild(child) {
 
     document.getElementById('identification').value =
@@ -173,7 +174,7 @@ async function updateChild() {
 
     }
 }
-
+ // function for deleting a child and refreshing the list
 async function deleteChild() {
 
     const identification =
@@ -230,7 +231,7 @@ async function deleteChild() {
     }
 }
 
-
+// function for loading a child record and populating the form
 async function loadChildRecord() {
     const params = new URLSearchParams(window.location.search);
     const identification = params.get('id');
