@@ -256,6 +256,8 @@ async function loadChildRecord() {
 
         console.log('Child received:', child);
 
+        updateChartVisibility(child.gender);
+
         const record = document.getElementById('child-record');
 
         record.innerHTML = `
@@ -288,13 +290,22 @@ async function loadChildControls() {
             throw new Error('Failed to load child controls');
         }
 
-        const controls = await response.json();  //<=== AQUI CHARTS.js PILAS AQUI <====
+        const controls = await response.json();
 
-console.log('Controls received from Spring Boot:', controls);
-console.log('Control data for charts:', controls);
+        weightForAgeBoysChart.data.datasets[5].data = [];
+        weightForAgeGirlsChart.data.datasets[5].data = [];
+
+        heightForAgeBoysChart.data.datasets[5].data = [];
+        heightForAgeGirlsChart.data.datasets[5].data = [];
+
+        bmiForAgeBoysChart.data.datasets[5].data = [];
+        bmiForAgeGirlsChart.data.datasets[5].data = [];
+
+        console.log('Controls received from Spring Boot:', controls);
+        console.log('Control data for charts:', controls);
 
 
-////////////////////////////////////
+
         console.log('Controls received from Spring Boot:', controls);
 
         const list = document.getElementById('controls-list');
@@ -757,7 +768,32 @@ async function deleteControl(id) {
 
 
 
+function updateChartVisibility(gender) {
 
+    const isGirl =
+        gender === 'Female' ||
+        gender === 'FEMALE' ||
+        gender === 'Girl' ||
+        gender === 'GIRL';
+
+    document.getElementById('heightForAgeBoysContainer').style.display =
+        isGirl ? 'none' : 'block';
+
+    document.getElementById('heightForAgeGirlsContainer').style.display =
+        isGirl ? 'block' : 'none';
+
+    document.getElementById('weightForAgeBoysContainer').style.display =
+        isGirl ? 'none' : 'block';
+
+    document.getElementById('weightForAgeGirlsContainer').style.display =
+        isGirl ? 'block' : 'none';
+
+    document.getElementById('bmiForAgeGirlsContainer').style.display =
+        isGirl ? 'block' : 'none';
+
+    document.getElementById('bmiForAgeBoysContainer').style.display =
+        isGirl ? 'none' : 'block';
+}
 
 
 

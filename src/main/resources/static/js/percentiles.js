@@ -116,6 +116,22 @@ const heightForAgeBoysChart = new Chart(ctx, {
 
   options: {
     responsive: true,
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    const point = context.raw;
+
+                    return [
+                        `Control Date: ${point.controlDate}`,
+                        `Height: ${point.height} cm`,
+                        `Weight: ${point.weight} kg`
+                    ];
+                }
+            }
+        }
+    },
+
     scales: {
       x: {
         title: {
@@ -284,6 +300,21 @@ const heightForAgeGirlsChart = new Chart(ctx2, {
   },
   options: {
     responsive: true,
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    const point = context.raw;
+
+                    return [
+                        `Control Date: ${point.controlDate}`,
+                        `Height: ${point.height} cm`,
+                        `Weight: ${point.weight} kg`
+                    ];
+                }
+            }
+        }
+    },
     scales: {
       x: {
         title: {
@@ -451,6 +482,21 @@ const weightForAgeBoysChart = new Chart(ctx3, {
   },
   options: {
     responsive: true,
+     plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        const point = context.raw;
+
+                        return [
+                            `Control Date: ${point.controlDate}`,
+                            `Weight: ${point.weight} kg`,
+                            `Height: ${point.height} cm`
+                        ];
+                    }
+                }
+            }
+        },
     scales: {
       x: {
         title: {
@@ -622,6 +668,21 @@ const weightForAgeGirlsChart = new Chart(ctx4, {
   },
   options: {
     responsive: true,
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    const point = context.raw;
+
+                    return [
+                        `Control Date: ${point.controlDate}`,
+                        `Weight: ${point.weight} kg`,
+                        `Height: ${point.height} cm`
+                    ];
+                }
+            }
+        }
+    },
     scales: {
       x: {
         title: {
@@ -814,6 +875,22 @@ const bmiForAgeGirlsChart = new Chart(ctx5, {
 
   options: {
     responsive: true,
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    const point = context.raw;
+
+                    return [
+                        `Control Date: ${point.controlDate}`,
+                        `BMI: ${point.bmi}`,
+                        `Weight: ${point.weight} kg`,
+                        `Height: ${point.height} cm`
+                    ];
+                }
+            }
+        }
+    },
 
     scales: {
       x: {
@@ -1016,6 +1093,22 @@ const bmiForAgeBoysChart = new Chart(ctx6, {
 
   options: {
     responsive: true,
+    plugins: {
+        tooltip: {
+            callbacks: {
+                label: function(context) {
+                    const point = context.raw;
+
+                    return [
+                        `Control Date: ${point.controlDate}`,
+                        `BMI: ${point.bmi}`,
+                        `Weight: ${point.weight} kg`,
+                        `Height: ${point.height} cm`
+                    ];
+                }
+            }
+        }
+    },
 
     scales: {
       x: {
@@ -1106,7 +1199,11 @@ function addWeightForAgePoint(control) {
 
     chart.data.datasets[5].data.push({
         x: ageInYears,
-        y: control.weight
+        y: control.weight,
+        controlDate: control.controlDate,
+            weight: control.weight,
+            height: control.height,
+            bmi: control.bmi
     });
 
     chart.update();
@@ -1128,7 +1225,11 @@ function addHeightForAgePoint(control) {
 
     chart.data.datasets[5].data.push({
         x: ageInYears,
-        y: control.height
+        y: control.height,
+        controlDate: control.controlDate,
+            weight: control.weight,
+            height: control.height,
+            bmi: control.bmi
     });
 
     chart.update();
@@ -1150,7 +1251,11 @@ function addBmiForAgePoint(control) {
 
     chart.data.datasets[5].data.push({
         x: ageInYears,
-        y: control.bmi
+        y: control.bmi,
+         controlDate: control.controlDate,
+            weight: control.weight,
+            height: control.height,
+            bmi: control.bmi
     });
 
     chart.update();
