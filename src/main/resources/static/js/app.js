@@ -288,8 +288,13 @@ async function loadChildControls() {
             throw new Error('Failed to load child controls');
         }
 
-        const controls = await response.json();
+        const controls = await response.json();  //<=== AQUI CHARTS.js PILAS AQUI <====
 
+console.log('Controls received from Spring Boot:', controls);
+console.log('Control data for charts:', controls);
+
+
+////////////////////////////////////
         console.log('Controls received from Spring Boot:', controls);
 
         const list = document.getElementById('controls-list');
@@ -303,6 +308,10 @@ async function loadChildControls() {
         }
 
         controls.forEach(control => {
+
+             addWeightForAgePoint(control);
+              addHeightForAgePoint(control);
+              addBmiForAgePoint(control);
 
             const controlElement = document.createElement('div');
 

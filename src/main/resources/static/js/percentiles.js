@@ -612,6 +612,12 @@ const weightForAgeGirlsChart = new Chart(ctx4, {
         pointRadius: 5,
         pointBackgroundColor: "blue",
       },
+      {
+          label: "Calculated Point",
+          data: [],
+          showLine: false,
+          pointRadius: 6
+      }
     ],
   },
   options: {
@@ -802,6 +808,7 @@ const bmiForAgeGirlsChart = new Chart(ctx5, {
         pointRadius: 5,
         pointBackgroundColor: "blue",
       },
+
     ],
   },
 
@@ -994,6 +1001,16 @@ const bmiForAgeBoysChart = new Chart(ctx6, {
         tension: 0.2,
         pointRadius: 0,
       },
+       {
+              label: "Calculated Point",
+              borderColor: "blue",
+              borderWidth: 2,
+              data: [],
+              showLine: false,
+              pointRadius: 5,
+              pointBackgroundColor: "blue",
+            },
+
     ],
   },
 
@@ -1072,3 +1089,69 @@ const bmiForAgeBoysChart = new Chart(ctx6, {
     },
   },
 });
+
+function addWeightForAgePoint(control) {
+
+    const birthDate = new Date(control.child.birthDate);
+    const controlDate = new Date(control.controlDate);
+
+    const ageInYears =
+        (controlDate - birthDate) /
+        (1000 * 60 * 60 * 24 * 365.25);
+
+    const chart =
+        control.child.gender === 'Female'
+            ? weightForAgeGirlsChart
+            : weightForAgeBoysChart;
+
+    chart.data.datasets[5].data.push({
+        x: ageInYears,
+        y: control.weight
+    });
+
+    chart.update();
+}
+
+function addHeightForAgePoint(control) {
+
+    const birthDate = new Date(control.child.birthDate);
+    const controlDate = new Date(control.controlDate);
+
+    const ageInYears =
+        (controlDate - birthDate) /
+        (1000 * 60 * 60 * 24 * 365.25);
+
+    const chart =
+        control.child.gender === 'Female'
+            ? heightForAgeGirlsChart
+            : heightForAgeBoysChart;
+
+    chart.data.datasets[5].data.push({
+        x: ageInYears,
+        y: control.height
+    });
+
+    chart.update();
+}
+
+function addBmiForAgePoint(control) {
+
+    const birthDate = new Date(control.child.birthDate);
+    const controlDate = new Date(control.controlDate);
+
+    const ageInYears =
+        (controlDate - birthDate) /
+        (1000 * 60 * 60 * 24 * 365.25);
+
+    const chart =
+        control.child.gender === 'Female'
+            ? bmiForAgeGirlsChart
+            : bmiForAgeBoysChart;
+
+    chart.data.datasets[5].data.push({
+        x: ageInYears,
+        y: control.bmi
+    });
+
+    chart.update();
+}
