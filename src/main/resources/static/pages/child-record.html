@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <title>Child Record</title>
 </head>
@@ -17,6 +18,37 @@
 <h2>Controls</h2>
 <div id="controls-list">
 <p> Loading controls...</p>
+</div>
+<h2>Growth Charts</h2>
+
+<div class="chart-container">
+    <h3>Length/Age - Boys</h3>
+    <canvas id="heightForAgeBoysChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <h3>Length/Age - Girls</h3>
+    <canvas id="heightForAgeGirlsChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <h3>Weight/Age - Boys</h3>
+    <canvas id="weightForAgeBoysChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <h3>Weight/Age - Girls</h3>
+    <canvas id="weightForAgeGirlsChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <h3>BMI/Age - Girls</h3>
+    <canvas id="bmiForAgeGirlsChart"></canvas>
+</div>
+
+<div class="chart-container">
+    <h3>BMI/Age - Boys</h3>
+    <canvas id="bmiForAgeBoysChart"></canvas>
 </div>
 
 <h2>Add Control</h2>
@@ -135,5 +167,6 @@
         });
 
 </script>
+<script src="/js/percentiles.js"></script>
 </body>
 </html>
