@@ -1,0 +1,186 @@
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import {
+       getChild,
+       getChildControls,
+       getControl,
+       deleteControl
+} from '../services/api'
+import ControlForm from '../components/ControlForm'
+
+function ChildRecord() {
+
+    const [searchParams] = useSearchParams()
+    const identification = searchParams.get('id')
+
+    const [child, setChild] = useState(null)
+    const [controls, setControls] = useState([])
+    const [editingControl, setEditingControl] = useState(null)
+
+    useEffect(() => {
+
+        async function loadData() {
+
+            try {
+
+                const childData = await getChild(identification)
+                const controlsData = await getChildControls(identification)
+
+                setChild(childData)
+                setControls(controlsData)
+
+            } catch (error) {
+                console.error('Error loading child record:', error)
+            }
+
+        }
+
+        if (identification) {
+            loadData()
+        }
+
+    }, [identification])
+
+    if (!child) {
+        return <p>Loading child...</p>
+    }
+
+    return (
+        <div>
+
+            <h1>Child Record</h1>
+
+            <p>
+                <strong>Identification:</strong> {child.identification}
+            </p>
+
+            <p>
+                <strong>First Name:</strong> {child.firstName}
+            </p>
+
+            <p>
+                <strong>Last Name:</strong> {child.lastName}
+            </p>
+
+            <p>
+                <strong>Birth Date:</strong> {child.birthDate}
+            </p>
+
+            <p>
+                <strong>Gender:</strong> {child.gender}
+            </p>
+
+          <ControlForm
+              key={editingControl?.id ?? 'new-control'}
+              identification={identification}
+              editingControl={editingControl}
+              onControlCreated={savedControl => {
+                  setControls(previousControls => {
+
+                      const exists = previousControls.some(
+                          control => control.id === savedControl.id
+                      )
+
+                      if (exists) {
+                          return previousControls.map(control =>
+                              control.id === savedControl.id
+                                  ? savedControl
+                                  : control
+                          )
+                      }
+
+                      return [
+                          ...previousControls,
+                          savedControl
+                      ]
+                  })
+              }}
+          />
+
+
+            <h2>Controls</h2>
+
+            {controls.length === 0 ? (
+                <p>No controls recorded.</p>
+            ) : (
+                controls.map(control => (
+                    <div key={control.id}>
+
+                        <p>
+                            <strong>Control Date:</strong>{' '}
+                            {control.controlDate}
+                        </p>
+
+                        <p>
+                            <strong>Weight:</strong>{' '}
+                            {control.weight} kg
+                        </p>
+
+                        <p>
+                            <strong>Height:</strong>{' '}
+                            {control.height} cm
+                        </p>
+
+                        <p>
+                            <strong>BMI:</strong>{' '}
+                            {control.bmi}
+                        </p>
+
+                        <button
+                            type="button"
+                            onClick={async () => {
+
+                                try {
+
+                                    const selectedControl = await getControl(control.id)
+
+                                    setEditingControl(selectedControl)
+
+                                } catch (error) {
+
+                                    console.error('Error loading control:', error)
+
+                                }
+
+                            }}
+                        >
+                            Edit
+                        </button>
+
+                          <br/>
+                        <button
+                            type="button"
+                            onClick={async () => {
+
+                                try {
+
+                                    await deleteControl(control.id)
+
+                                    setControls(previousControls =>
+                                        previousControls.filter(
+                                            existingControl =>
+                                                existingControl.id !== control.id
+                                        )
+                                    )
+
+                                } catch (error) {
+
+                                    console.error('Error deleting control:', error)
+
+                                }
+
+                            }}
+                        >
+                            Delete
+                        </button>
+                     <hr />
+
+                    </div>
+                ))
+            )}
+
+        </div>
+    )
+}
+
+export default ChildRecord
