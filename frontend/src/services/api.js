@@ -99,3 +99,33 @@ export async function createChild(child) {
 
     return await response.json()
 }
+
+export async function updateChild(identification, child) {
+
+    const response = await fetch(`/api/children/${identification}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(child)
+    })
+
+    if (!response.ok) {
+        throw new Error('Failed to update child')
+    }
+
+    return await response.json()
+}
+export async function deleteChild(identification) {
+
+    const response = await fetch(
+        `/api/children/${identification}`,
+        {
+            method: 'DELETE'
+        }
+    )
+
+    if (!response.ok) {
+        throw new Error('Failed to delete child')
+    }
+}

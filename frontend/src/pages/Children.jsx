@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getChildren, createChild } from '../services/api'
+import { getChildren, createChild, updateChild, deleteChild } from '../services/api'
 
 function Children() {
 
@@ -9,6 +9,10 @@ function Children() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [birthDate, setBirthDate] = useState('')
+    const [gender, setGender] = useState('')
+    const [familyHistory, setFamilyHistory] = useState('')
+    const [personalHistory, setPersonalHistory] = useState('')
+    const [editingChild, setEditingChild] = useState(null)
 
     useEffect(() => {
 
@@ -27,6 +31,7 @@ function Children() {
 
     }, [])
 
+
     async function handleSubmit(event) {
 
         event.preventDefault()
@@ -35,7 +40,10 @@ function Children() {
             identification,
             firstName,
             lastName,
-            birthDate
+            birthDate,
+            gender,
+            familyHistory,
+            personalHistory
         }
 
         try {
@@ -51,10 +59,106 @@ function Children() {
             setFirstName('')
             setLastName('')
             setBirthDate('')
+            setGender('')
+            setFamilyHistory('')
+            setPersonalHistory('')
 
         } catch (error) {
 
-            console.error('Error creating child:', error)
+            console.error('Error saving child:', error)
+
+        }
+    }
+
+
+    async function handleUpdate() {
+
+        if (!editingChild) {
+            return
+        }
+
+        const child = {
+            identification,
+            firstName,
+            lastName,
+            birthDate,
+            gender,
+            familyHistory,
+            personalHistory
+        }
+
+        try {
+
+            const updatedChild = await updateChild(
+                editingChild.identification,
+                child
+            )
+
+            setChildren(previousChildren =>
+                previousChildren.map(existingChild =>
+                    existingChild.identification ===
+                    updatedChild.identification
+                        ? updatedChild
+                        : existingChild
+                )
+            )
+
+            setEditingChild(null)
+
+            setIdentification('')
+            setFirstName('')
+            setLastName('')
+            setBirthDate('')
+            setGender('')
+            setFamilyHistory('')
+            setPersonalHistory('')
+
+        } catch (error) {
+
+            console.error('Error updating child:', error)
+
+        }
+    }
+
+    async function handleDelete() {
+
+        if (!editingChild) {
+            return
+        }
+
+        const confirmed = window.confirm(
+            `Are you sure you want to delete child ${editingChild.identification}?`
+        )
+
+        if (!confirmed) {
+            return
+        }
+
+        try {
+
+            await deleteChild(editingChild.identification)
+
+            setChildren(previousChildren =>
+                previousChildren.filter(
+                    child =>
+                        child.identification !==
+                        editingChild.identification
+                )
+            )
+
+            setEditingChild(null)
+
+            setIdentification('')
+            setFirstName('')
+            setLastName('')
+            setBirthDate('')
+            setGender('')
+            setFamilyHistory('')
+            setPersonalHistory('')
+
+        } catch (error) {
+
+            console.error('Error deleting child:', error)
 
         }
     }
@@ -118,8 +222,77 @@ function Children() {
                     />
                 </div>
 
+                <div>
+                    <label>
+                        Gender
+                    </label>
+
+                    <div>
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="Male"
+                                checked={gender === 'Male'}
+                                onChange={event => setGender(event.target.value)}
+                                required
+                            />
+                            Male
+                        </label>
+                    </div>
+
+                    <div>
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                value="Female"
+                                checked={gender === 'Female'}
+                                onChange={event => setGender(event.target.value)}
+                            />
+                            Female
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label>
+                        Family History
+                    </label>
+
+                    <textarea
+                        value={familyHistory}
+                        onChange={event => setFamilyHistory(event.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>
+                        Personal History
+                    </label>
+
+                    <textarea
+                        value={personalHistory}
+                        onChange={event => setPersonalHistory(event.target.value)}
+                    />
+                </div>
+
                 <button type="submit">
                     Save Child
+                </button>
+                <button
+                    type="button"
+                    disabled={!editingChild}
+                    onClick={handleUpdate}
+                >
+                    Update Child
+                </button>
+
+                <button
+                    type="button"
+                    disabled={!editingChild}
+                    onClick={handleDelete}
+                >
+                    Delete Child
                 </button>
 
             </form>
@@ -127,7 +300,23 @@ function Children() {
             {children.map(child => (
                 <div key={child.identification}>
 
-                    <p>
+                    <p
+                    onClick={() => {
+                        console.log(child)
+                        setEditingChild(child)
+                        setIdentification(child.identification)
+                        setFirstName(child.firstName)
+                        setLastName(child.lastName)
+                        setBirthDate(child.birthDate ?? '')
+                        setGender(child.gender ?? '')
+                        setFamilyHistory(child.familyHistory ?? '')
+                        setPersonalHistory(child.personalHistory ?? '')
+
+                    }}
+
+                        style={{ cursor: 'pointer' } }
+
+                     >
                         <strong>{child.identification}</strong>
                         {' - '}
                         {child.firstName} {child.lastName}
