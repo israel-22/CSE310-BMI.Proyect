@@ -141,7 +141,10 @@ function ChildRecord() {
 
                }}
            />
-           <GrowthChart />
+           <GrowthChart
+           child={child}
+           controls={controls}
+           />
 
 
 

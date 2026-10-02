@@ -1,20 +1,96 @@
 import Chart from 'chart.js/auto'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 window.Chart = Chart
 
-function GrowthChart() {
+function GrowthChart({ child, controls }) {
+
+    const [chartsReady, setChartsReady] = useState(false)
 
     useEffect(() => {
 
         const script = document.createElement('script')
 
-        script.src = '/charts.js'
+        script.src = 'http://localhost:8080/js/charts.js'
         script.async = false
+
+        script.onload = () => {
+
+            console.log('charts.js loaded successfully')
+
+            setChartsReady(true)
+
+        }
 
         document.body.appendChild(script)
 
     }, [])
+useEffect(() => {
+
+    if (!chartsReady) {
+        return
+    }
+
+    if (
+        typeof window.addWeightForAgePoint !== 'function' ||
+        typeof window.addHeightForAgePoint !== 'function' ||
+        typeof window.addBmiForAgePoint !== 'function'
+    ) {
+        console.error('Chart functions are not available yet')
+        return
+    }
+
+    const chartIds = [
+        'heightForAgeBoysChart',
+        'heightForAgeGirlsChart',
+        'weightForAgeBoysChart',
+        'weightForAgeGirlsChart',
+        'bmiForAgeGirlsChart',
+        'bmiForAgeBoysChart'
+    ]
+
+    chartIds.forEach(chartId => {
+
+        const chart = Chart.getChart(chartId)
+
+        if (!chart) {
+            return
+        }
+
+        const calculatedDataset = chart.data.datasets.find(
+            dataset => dataset.label === 'Calculated Point'
+        )
+
+        if (calculatedDataset) {
+            calculatedDataset.data = []
+        }
+
+    })
+
+    if (!controls || controls.length === 0) {
+        return
+    }
+
+    controls.forEach(control => {
+
+        window.addWeightForAgePoint({
+            ...control,
+            child
+        })
+
+        window.addHeightForAgePoint({
+            ...control,
+            child
+        })
+
+        window.addBmiForAgePoint({
+            ...control,
+            child
+        })
+
+    })
+
+}, [child, controls, chartsReady])
 
     return (
         <section>
