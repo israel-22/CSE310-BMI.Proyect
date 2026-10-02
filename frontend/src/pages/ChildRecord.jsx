@@ -7,6 +7,8 @@ import {
        deleteControl
 } from '../services/api'
 import ControlForm from '../components/ControlForm'
+import ControlList from '../components/ControlList'
+import GrowthChart from '../components/GrowthChart'
 
 function ChildRecord() {
 
@@ -98,86 +100,52 @@ function ChildRecord() {
           />
 
 
-            <h2>Controls</h2>
+           <h2>Controls</h2>
 
-            {controls.length === 0 ? (
-                <p>No controls recorded.</p>
-            ) : (
-                controls.map(control => (
-                    <div key={control.id}>
+           <ControlList
+               controls={controls}
 
-                        <p>
-                            <strong>Control Date:</strong>{' '}
-                            {control.controlDate}
-                        </p>
+               onEdit={async controlId => {
 
-                        <p>
-                            <strong>Weight:</strong>{' '}
-                            {control.weight} kg
-                        </p>
+                   try {
 
-                        <p>
-                            <strong>Height:</strong>{' '}
-                            {control.height} cm
-                        </p>
+                       const selectedControl = await getControl(controlId)
 
-                        <p>
-                            <strong>BMI:</strong>{' '}
-                            {control.bmi}
-                        </p>
+                       setEditingControl(selectedControl)
 
-                        <button
-                            type="button"
-                            onClick={async () => {
+                   } catch (error) {
 
-                                try {
+                       console.error('Error loading control:', error)
 
-                                    const selectedControl = await getControl(control.id)
+                   }
 
-                                    setEditingControl(selectedControl)
+               }}
 
-                                } catch (error) {
+               onDelete={async controlId => {
 
-                                    console.error('Error loading control:', error)
+                   try {
 
-                                }
+                       await deleteControl(controlId)
 
-                            }}
-                        >
-                            Edit
-                        </button>
+                       setControls(previousControls =>
+                           previousControls.filter(
+                               control => control.id !== controlId
+                           )
+                       )
 
-                          <br/>
-                        <button
-                            type="button"
-                            onClick={async () => {
+                   } catch (error) {
 
-                                try {
+                       console.error('Error deleting control:', error)
 
-                                    await deleteControl(control.id)
+                   }
 
-                                    setControls(previousControls =>
-                                        previousControls.filter(
-                                            existingControl =>
-                                                existingControl.id !== control.id
-                                        )
-                                    )
+               }}
+           />
+           <GrowthChart />
 
-                                } catch (error) {
 
-                                    console.error('Error deleting control:', error)
 
-                                }
 
-                            }}
-                        >
-                            Delete
-                        </button>
-                     <hr />
-
-                    </div>
-                ))
-            )}
 
         </div>
     )

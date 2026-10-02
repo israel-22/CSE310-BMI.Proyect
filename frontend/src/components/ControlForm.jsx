@@ -7,17 +7,57 @@ function ControlForm({
     onControlCreated
 }) {
 
-const [controlDate, setControlDate] = useState(
-    editingControl?.controlDate ?? ''
-)
+    const [controlDate, setControlDate] = useState(
+        editingControl?.controlDate ?? ''
+    )
 
-const [weight, setWeight] = useState(
-    editingControl?.weight ?? ''
-)
+    const [weight, setWeight] = useState(
+        editingControl?.weight ?? ''
+    )
 
-const [height, setHeight] = useState(
-    editingControl?.height ?? ''
-)
+    const [height, setHeight] = useState(
+        editingControl?.height ?? ''
+    )
+
+    const [headCircumference, setHeadCircumference] = useState(
+        editingControl?.headCircumference ?? ''
+    )
+
+    const [thoracicCircumference, setThoracicCircumference] = useState(
+        editingControl?.thoracicCircumference ?? ''
+    )
+
+    const [abdominalCircumference, setAbdominalCircumference] = useState(
+        editingControl?.abdominalCircumference ?? ''
+    )
+
+    const [heartRate, setHeartRate] = useState(
+        editingControl?.heartRate ?? ''
+    )
+
+    const [respiratoryRate, setRespiratoryRate] = useState(
+        editingControl?.respiratoryRate ?? ''
+    )
+
+    const [oxygenSaturation, setOxygenSaturation] = useState(
+        editingControl?.oxygenSaturation ?? ''
+    )
+
+    const [temperature, setTemperature] = useState(
+        editingControl?.temperature ?? ''
+    )
+
+    const [hemoglobin, setHemoglobin] = useState(
+        editingControl?.hemoglobin ?? ''
+    )
+
+    const [diet, setDiet] = useState(
+        editingControl?.diet ?? ''
+    )
+
+    const [mealsPerDay, setMealsPerDay] = useState(
+        editingControl?.mealsPerDay ?? ''
+    )
 
     async function handleSubmit(event) {
 
@@ -27,12 +67,23 @@ const [height, setHeight] = useState(
             controlDate,
             weight: Number(weight),
             height: Number(height),
+            headCircumference: Number(headCircumference),
+            thoracicCircumference: Number(thoracicCircumference),
+            abdominalCircumference: Number(abdominalCircumference),
+            heartRate: Number(heartRate),
+            respiratoryRate: Number(respiratoryRate),
+            oxygenSaturation: Number(oxygenSaturation),
+            temperature: Number(temperature),
+            hemoglobin: Number(hemoglobin),
+            diet,
+            mealsPerDay: Number(mealsPerDay),
             child: {
                 identification
             }
         }
 
         try {
+
             console.log('Editing control:', editingControl)
 
             const savedControl = editingControl
@@ -44,9 +95,21 @@ const [height, setHeight] = useState(
             setControlDate('')
             setWeight('')
             setHeight('')
+            setHeadCircumference('')
+            setThoracicCircumference('')
+            setAbdominalCircumference('')
+            setHeartRate('')
+            setRespiratoryRate('')
+            setOxygenSaturation('')
+            setTemperature('')
+            setHemoglobin('')
+            setDiet('')
+            setMealsPerDay('')
 
         } catch (error) {
+
             console.error('Error creating control:', error)
+
         }
     }
 
@@ -94,6 +157,143 @@ const [height, setHeight] = useState(
                     onChange={event => setHeight(event.target.value)}
                     required
                 />
+            </div>
+
+            <div>
+                <label>
+                    Head Circumference (cm)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    value={headCircumference}
+                    onChange={event => setHeadCircumference(event.target.value)}
+                />
+            </div>
+
+            <div>
+                <label>
+                    Thoracic Circumference (cm)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    value={thoracicCircumference}
+                    onChange={event => setThoracicCircumference(event.target.value)}
+                />
+            </div>
+
+            <div>
+                <label>
+                    Abdominal Circumference (cm)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    value={abdominalCircumference}
+                    onChange={event => setAbdominalCircumference(event.target.value)}
+                />
+            </div>
+
+            <div>
+                <label>
+                    Heart Rate (bpm)
+                </label>
+
+                <input
+                    type="number"
+                    value={heartRate}
+                    onChange={event => setHeartRate(event.target.value)}
+                />
+            </div>
+
+            <div>
+                <label>
+                    Respiratory Rate (breaths/min)
+                </label>
+
+                <input
+                    type="number"
+                    value={respiratoryRate}
+                    onChange={event => setRespiratoryRate(event.target.value)}
+                />
+            </div>
+
+            <div>
+                <label>
+                    Oxygen Saturation (%)
+                </label>
+
+                <input
+                    type="number"
+                    value={oxygenSaturation}
+                    onChange={event => setOxygenSaturation(event.target.value)}
+                />
+            </div>
+
+            <div>
+                <label>
+                    Temperature (°C)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    value={temperature}
+                    onChange={event => setTemperature(event.target.value)}
+                />
+            </div>
+
+            <div>
+                <label>
+                    Hemoglobin (g/dL)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    value={hemoglobin}
+                    onChange={event => setHemoglobin(event.target.value)}
+                />
+            </div>
+
+            <div>
+                <label>
+                    Diet
+                </label>
+
+                <select
+                    value={diet}
+                    onChange={event => setDiet(event.target.value)}
+                >
+                    <option value="">Select diet</option>
+                    <option value="Hypercaloric">Hypercaloric</option>
+                    <option value="Hypocaloric">Hypocaloric</option>
+                    <option value="Mediterranean">Mediterranean</option>
+                    <option value="Infant">Infant</option>
+                </select>
+            </div>
+
+            <div>
+                <label>
+                    Meals per Day
+                </label>
+
+                <select
+                    value={mealsPerDay}
+                    onChange={event => setMealsPerDay(event.target.value)}
+                >
+                    <option value="">Select</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
             </div>
 
             <button type="submit">
