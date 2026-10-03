@@ -63,6 +63,31 @@ function ControlForm({
 
         event.preventDefault()
 
+        if (!controlDate) {
+            alert('Control date is required')
+            return
+        }
+
+        if (weight === '') {
+            alert('Weight is required')
+            return
+        }
+
+        if (height === '') {
+            alert('Height is required')
+            return
+        }
+
+        if (Number(weight) <= 0) {
+            alert('Weight must be greater than zero')
+            return
+        }
+
+        if (Number(height) <= 0) {
+            alert('Height must be greater than zero')
+            return
+        }
+
         const control = {
             controlDate,
             weight: Number(weight),

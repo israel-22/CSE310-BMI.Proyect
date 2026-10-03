@@ -80,12 +80,11 @@ function ChildRecord() {
                   setControls(previousControls => {
 
                       const exists = previousControls.some(
-                          control => control.id === savedControl.id
+                          control => String(control.id) === String(savedControl.id)
                       )
-
                       if (exists) {
                           return previousControls.map(control =>
-                              control.id === savedControl.id
+                              String(control.id) === String(savedControl.id)
                                   ? savedControl
                                   : control
                           )
@@ -129,7 +128,7 @@ function ChildRecord() {
 
                        setControls(previousControls =>
                            previousControls.filter(
-                               control => control.id !== controlId
+                               control => String(control.id) !== String(controlId)
                            )
                        )
 
@@ -145,10 +144,6 @@ function ChildRecord() {
            child={child}
            controls={controls}
            />
-
-
-
-
 
         </div>
     )

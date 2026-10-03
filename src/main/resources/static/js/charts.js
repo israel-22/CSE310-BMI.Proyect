@@ -1197,13 +1197,26 @@ function addWeightForAgePoint(control) {
             ? weightForAgeGirlsChart
             : weightForAgeBoysChart;
 
-    chart.data.datasets[5].data.push({
+    const calculatedDataset = chart.data.datasets.find(
+        dataset => dataset.label === 'Calculated Point'
+    );
+
+    if (!calculatedDataset) {
+        console.error('Calculated Point dataset not found');
+        return;
+    }
+    calculatedDataset.borderColor = 'blue';
+    calculatedDataset.backgroundColor = 'blue';
+    calculatedDataset.pointBackgroundColor = 'blue';
+    calculatedDataset.pointBorderColor = 'blue';
+
+    calculatedDataset.data.push({
         x: ageInYears,
         y: control.weight,
         controlDate: control.controlDate,
-            weight: control.weight,
-            height: control.height,
-            bmi: control.bmi
+        weight: control.weight,
+        height: control.height,
+        bmi: control.bmi
     });
 
     chart.update();

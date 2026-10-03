@@ -33,21 +33,44 @@ function Children() {
 
 
     async function handleSubmit(event) {
-
         event.preventDefault()
 
+        if (!identification.trim()) {
+            alert('Identification is required')
+            return
+        }
+
+        if (!firstName.trim()) {
+            alert('First name is required')
+            return
+        }
+
+        if (!lastName.trim()) {
+            alert('Last name is required')
+            return
+        }
+
+        if (!birthDate) {
+            alert('Birth date is required')
+            return
+        }
+
+        if (!gender) {
+            alert('Gender is required')
+            return
+        }
+
         const child = {
-            identification,
-            firstName,
-            lastName,
+            identification: identification.trim(),
+            firstName: firstName.trim(),
+            lastName: lastName.trim(),
             birthDate,
             gender,
-            familyHistory,
-            personalHistory
+            familyHistory: familyHistory.trim(),
+            personalHistory: personalHistory.trim()
         }
 
         try {
-
             const createdChild = await createChild(child)
 
             setChildren(previousChildren => [
@@ -64,12 +87,9 @@ function Children() {
             setPersonalHistory('')
 
         } catch (error) {
-
             console.error('Error saving child:', error)
-
         }
     }
-
 
     async function handleUpdate() {
 
