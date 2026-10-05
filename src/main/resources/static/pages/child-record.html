@@ -15,9 +15,13 @@
 <div id="child-record">
     <p>Loading child...</p>
 </div>
+<button id="generateReportButton">
+    Generate PDF Report
+</button>
 <h2>Controls</h2>
 <div id="controls-list">
 <p> Loading controls...</p>
+
 </div>
 <h2>Growth Charts</h2>
 <div class="chart-container" id="heightForAgeBoysContainer">
@@ -49,6 +53,7 @@
     <h3>BMI/Age - Boys</h3>
     <canvas id="bmiForAgeBoysChart"></canvas>
 </div>
+
 
 <h2>Add Control</h2>
 
@@ -139,11 +144,29 @@
 
     <button type="submit" id="save-control-button">Save Control</button>
 
+
 </form>
 
 
 
+<script>
+    document
+        .getElementById('generateReportButton')
+        .addEventListener('click', function () {
 
+            const params =
+                new URLSearchParams(window.location.search);
+
+            const identification =
+                params.get('id');
+
+            window.open(
+                `/api/children/${identification}/report`,
+                '_blank'
+            );
+
+        });
+</script>
 
 <script src="/js/app.js"></script>
 
