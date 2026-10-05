@@ -1,0 +1,436 @@
+
+/* =========================================================
+   Pediatric Growth
+   Fisher-Price Toy Design
+   ========================================================= */
+
+
+/* ---------- Base ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Trebuchet MS", "Arial Rounded MT Bold", Arial, sans-serif;
+    background: #fff7e8;
+    color: #4b4650;
+}
+
+
+/* ---------- Header ---------- */
+
+.app-header {
+    background: #aee3f5;
+    padding: 18px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 6px solid #f6c6d8;
+    box-shadow: 0 5px 0 rgba(120, 100, 100, 0.12);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    width: 62px;
+    height: 62px;
+    background: #ffe58a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    box-shadow: 0 5px 0 #e8c86e;
+}
+
+.logo-area h1 {
+    margin: 0;
+    color: #51495a;
+    font-size: 28px;
+}
+
+.logo-area p {
+    margin: 4px 0 0;
+    color: #6b6570;
+    font-size: 14px;
+}
+
+
+/* ---------- Navigation ---------- */
+
+.main-navigation {
+    display: flex;
+    gap: 10px;
+}
+
+.main-navigation button {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    background: #ffffff;
+    color: #59515d;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #d8cdd2;
+}
+
+.main-navigation button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ---------- Main container ---------- */
+
+.main-container {
+    width: min(1100px, 94%);
+    margin: 30px auto;
+}
+
+
+/* ---------- Child header ---------- */
+
+.child-header {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 7px 0 #eadfe1;
+    border: 3px solid #f4d5df;
+}
+
+.child-avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #ffd9e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    box-shadow: 0 5px 0 #eab8c9;
+}
+
+.child-information {
+    flex: 1;
+}
+
+.child-information h2 {
+    margin: 0 0 8px;
+    color: #51495a;
+    font-size: 25px;
+}
+
+.child-information p {
+    margin: 4px 0;
+    color: #77717a;
+}
+
+.child-actions {
+    display: flex;
+    gap: 8px;
+}
+
+
+/* ---------- Buttons ---------- */
+
+button {
+    font-family: inherit;
+}
+
+.button-edit,
+.button-delete,
+.button-primary,
+.button-small {
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.15s ease;
+}
+
+.button-edit {
+    background: #c9e8ff;
+    color: #496276;
+    padding: 10px 18px;
+    border-radius: 20px;
+    box-shadow: 0 4px 0 #a8cde5;
+}
+
+.button-delete {
+    background: #ffd0d0;
+    color: #825454;
+    padding: 10px 18px;
+    border-radius: 20px;
+    box-shadow: 0 4px 0 #e4aaaa;
+}
+
+.button-primary {
+    background: #aee6c3;
+    color: #41634d;
+    padding: 13px 22px;
+    border-radius: 25px;
+    box-shadow: 0 5px 0 #8bc9a3;
+}
+
+.button-edit:hover,
+.button-delete:hover,
+.button-primary:hover {
+    transform: translateY(-2px);
+}
+
+.button-edit:active,
+.button-delete:active,
+.button-primary:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+
+/* ---------- Health summary ---------- */
+
+.health-summary {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.health-card {
+    min-height: 125px;
+    border-radius: 25px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 7px 0 rgba(120, 100, 100, 0.12);
+}
+
+.weight-card {
+    background: #fff0b8;
+}
+
+.height-card {
+    background: #c9ecff;
+}
+
+.bmi-card {
+    background: #c9f0d5;
+}
+
+.health-icon {
+    font-size: 38px;
+}
+
+.health-card h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    color: #68616a;
+}
+
+.health-card strong {
+    font-size: 25px;
+    color: #49434c;
+}
+
+
+/* ---------- Sections ---------- */
+
+.controls-section,
+.charts-section,
+.report-section {
+    margin-top: 35px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.section-header > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #51495a;
+}
+
+.section-icon {
+    font-size: 27px;
+}
+
+
+/* ---------- Controls table ---------- */
+
+.controls-table-container {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 25px;
+    box-shadow: 0 7px 0 #eadfe1;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 7px;
+}
+
+thead th {
+    color: #766e78;
+    font-size: 13px;
+    padding: 10px;
+    text-align: left;
+}
+
+tbody tr {
+    background: #fff8df;
+}
+
+tbody td {
+    padding: 14px 10px;
+}
+
+tbody td:first-child {
+    border-radius: 15px 0 0 15px;
+}
+
+tbody td:last-child {
+    border-radius: 0 15px 15px 0;
+}
+
+.button-small {
+    padding: 7px 12px;
+    font-size: 12px;
+}
+
+
+/* ---------- Growth charts ---------- */
+
+.chart-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 7px 0 #eadfe1;
+    border: 3px solid #f5e9ec;
+}
+
+.chart-card h3 {
+    margin: 0 0 15px;
+    color: #5a5360;
+}
+
+.chart-placeholder {
+    min-height: 250px;
+    background: #f8fbff;
+    border: 3px dashed #b9dce9;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #91a8b1;
+    font-weight: bold;
+}
+
+
+/* ---------- Report ---------- */
+
+.report-card {
+    background: #ffe5ef;
+    border: 3px solid #f4c5d7;
+    border-radius: 28px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 7px 0 #e8c2d1;
+}
+
+.report-icon {
+    font-size: 45px;
+}
+
+.report-card div {
+    flex: 1;
+}
+
+.report-card h2 {
+    margin: 0 0 6px;
+    color: #594c55;
+}
+
+.report-card p {
+    margin: 0;
+    color: #776c74;
+    line-height: 1.5;
+}
+
+
+/* ---------- Footer ---------- */
+
+.app-footer {
+    margin-top: 45px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    color: #817781;
+}
+
+.app-footer span {
+    font-size: 24px;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 750px) {
+
+    .app-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .logo-area {
+        flex-direction: column;
+    }
+
+    .child-header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .health-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .report-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+}
+

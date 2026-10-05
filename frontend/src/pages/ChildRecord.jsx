@@ -47,10 +47,12 @@ function ChildRecord() {
         return <p>Loading child...</p>
     }
 
+
     return (
         <div>
 
             <h1>Child Record</h1>
+
 
             <p>
                 <strong>Identification:</strong> {child.identification}
@@ -71,6 +73,18 @@ function ChildRecord() {
             <p>
                 <strong>Gender:</strong> {child.gender}
             </p>
+
+            <button
+                type="button"
+                onClick={() => {
+                    window.open(
+                        `/api/children/${child.identification}/report`,
+                        '_blank'
+                    )
+                }}
+            >
+                Generate PDF Report
+            </button>
 
           <ControlForm
               key={editingControl?.id ?? 'new-control'}

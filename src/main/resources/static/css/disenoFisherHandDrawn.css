@@ -1,0 +1,868 @@
+/* =========================================================
+   Pediatric Growth
+   Fisher-Price + Hand Drawn Notebook
+   ========================================================= */
+
+
+/* ---------- Base ---------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        "Comic Sans MS",
+        "Chalkboard SE",
+        "Marker Felt",
+        "Trebuchet MS",
+        cursive;
+
+    color: #4b4650;
+
+    background-color: #fffdf3;
+
+    /* Notebook paper */
+    background-image:
+        linear-gradient(
+            transparent 31px,
+            rgba(120, 180, 220, 0.18) 32px,
+            transparent 33px
+        ),
+        linear-gradient(
+            90deg,
+            transparent 74px,
+            rgba(215, 105, 120, 0.22) 75px,
+            transparent 77px
+        );
+
+    background-size:
+        100% 32px,
+        100% 100%;
+
+    background-attachment: local;
+
+    position: relative;
+}
+
+
+/* ---------- Notebook perforations ---------- */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    left: 38px;
+    top: 0;
+    bottom: 0;
+
+    width: 15px;
+
+    background-image:
+        radial-gradient(
+            circle,
+            #e2d9c9 0,
+            #e2d9c9 5px,
+            #fffdf3 6px,
+            transparent 7px
+        );
+
+    background-size: 15px 32px;
+    background-repeat: repeat-y;
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* ---------- Main content layer ---------- */
+
+.app-header,
+.main-container {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* ---------- Header ---------- */
+
+.app-header {
+    background: #aee3f5;
+
+    padding: 18px 35px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 5px solid #f6c6d8;
+
+    box-shadow:
+        0 5px 0 rgba(120, 100, 100, 0.12);
+
+    transform: rotate(-0.25deg);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-icon {
+    width: 62px;
+    height: 62px;
+
+    background: #ffe58a;
+
+    border: 3px solid #d5b75e;
+
+    border-radius:
+        48% 52% 50% 46%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 35px;
+
+    box-shadow:
+        4px 4px 0 #d8bd68;
+
+    transform: rotate(3deg);
+}
+
+.logo-area h1 {
+    margin: 0;
+
+    color: #51495a;
+
+    font-family:
+        "Comic Sans MS",
+        "Chalkboard SE",
+        "Marker Felt",
+        "Trebuchet MS",
+        cursive;
+
+    font-size: 28px;
+
+    letter-spacing: 0.4px;
+
+    transform: rotate(-1deg);
+}
+
+.logo-area p {
+    margin: 4px 0 0;
+
+    color: #6b6570;
+
+    font-size: 14px;
+}
+
+
+/* ---------- Navigation ---------- */
+
+.main-navigation {
+    display: flex;
+    gap: 10px;
+}
+
+.main-navigation button {
+    border: 3px solid #6b8794;
+
+    padding: 11px 19px;
+
+    background: #ffffff;
+    color: #59515d;
+
+    font-family: inherit;
+
+    font-weight: bold;
+    font-size: 14px;
+
+    cursor: pointer;
+
+    border-radius:
+        8px 5px 9px 6px;
+
+    box-shadow:
+        3px 3px 0 #6b8794;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.main-navigation button:nth-child(2) {
+    transform: rotate(1deg);
+}
+
+.main-navigation button:hover {
+    transform: translate(1px, 1px);
+
+    box-shadow:
+        2px 2px 0 #6b8794;
+}
+
+
+/* ---------- Main container ---------- */
+
+.main-container {
+    width: min(1100px, 92%);
+
+    margin: 42px auto;
+}
+
+
+/* ---------- Child header ---------- */
+
+.child-header {
+    background: #ffffff;
+
+    border: 3px solid #f4d5df;
+
+    border-radius:
+        22px 27px 20px 25px;
+
+    padding: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    box-shadow:
+        5px 6px 0 #eadfe1;
+
+    transform: rotate(0.35deg);
+}
+
+.child-avatar {
+    width: 90px;
+    height: 90px;
+
+    background: #ffd9e5;
+
+    border: 3px solid #eab8c9;
+
+    border-radius:
+        47% 53% 50% 46%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 50px;
+
+    box-shadow:
+        4px 4px 0 #eab8c9;
+
+    transform: rotate(-2deg);
+}
+
+.child-information {
+    flex: 1;
+}
+
+.child-information h2 {
+    margin: 0 0 8px;
+
+    color: #51495a;
+
+    font-size: 25px;
+}
+
+.child-information p {
+    margin: 4px 0;
+
+    color: #77717a;
+}
+
+.child-actions {
+    display: flex;
+    gap: 9px;
+}
+
+
+/* ---------- Buttons ---------- */
+
+button {
+    font-family: inherit;
+}
+
+.button-edit,
+.button-delete,
+.button-primary,
+.button-small {
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.button-edit {
+    background: #c9e8ff;
+    color: #496276;
+
+    border: 3px solid #82abc6;
+
+    padding: 9px 17px;
+
+    border-radius:
+        8px 6px 9px 7px;
+
+    box-shadow:
+        3px 3px 0 #82abc6;
+}
+
+.button-delete {
+    background: #ffd0d0;
+    color: #825454;
+
+    border: 3px solid #c78b8b;
+
+    padding: 9px 17px;
+
+    border-radius:
+        7px 9px 6px 8px;
+
+    box-shadow:
+        3px 3px 0 #c78b8b;
+}
+
+.button-primary {
+    background: #aee6c3;
+    color: #41634d;
+
+    border: 3px solid #78b28f;
+
+    padding: 12px 21px;
+
+    border-radius:
+        9px 6px 10px 7px;
+
+    box-shadow:
+        4px 4px 0 #78b28f;
+}
+
+.button-edit:hover,
+.button-delete:hover,
+.button-primary:hover {
+    transform: translate(1px, 1px);
+
+    box-shadow:
+        2px 2px 0;
+}
+
+.button-edit:active,
+.button-delete:active,
+.button-primary:active {
+    transform: translate(4px, 4px);
+
+    box-shadow: none;
+}
+
+
+/* ---------- Health summary ---------- */
+
+.health-summary {
+    margin-top: 28px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 21px;
+}
+
+.health-card {
+    min-height: 125px;
+
+    padding: 21px;
+
+    display: flex;
+    align-items: center;
+    gap: 17px;
+
+    border: 3px solid;
+
+    border-radius:
+        20px 24px 18px 22px;
+
+    box-shadow:
+        5px 6px 0 rgba(120, 100, 100, 0.14);
+
+    position: relative;
+}
+
+
+/* ---------- Post-it tape ---------- */
+
+.weight-card::before,
+.bmi-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: -9px;
+    left: 50%;
+
+    width: 48px;
+    height: 14px;
+
+    background:
+        rgba(255, 235, 170, 0.78);
+
+    transform:
+        translateX(-50%)
+        rotate(-3deg);
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.08);
+
+    z-index: 2;
+}
+
+
+/* ---------- Weight ---------- */
+
+.weight-card {
+    background: #fff0b8;
+
+    border-color: #ddc266;
+
+    transform:
+        rotate(-1.2deg);
+
+    box-shadow:
+        5px 6px 0 #d8c27b;
+}
+
+
+/* ---------- Height ---------- */
+
+.height-card {
+    background: #c9ecff;
+
+    border-color: #8bbbd3;
+
+    transform:
+        rotate(0.7deg);
+
+    box-shadow:
+        5px 6px 0 #9dc7d9;
+}
+
+
+/* ---------- BMI ---------- */
+
+.bmi-card {
+    background: #c9f0d5;
+
+    border-color: #8abd98;
+
+    transform:
+        rotate(-0.5deg);
+
+    box-shadow:
+        5px 6px 0 #9ac8a6;
+}
+
+.health-icon {
+    font-size: 38px;
+}
+
+.health-card h3 {
+    margin: 0 0 6px;
+
+    font-size: 15px;
+
+    color: #68616a;
+}
+
+.health-card strong {
+    font-size: 25px;
+
+    color: #49434c;
+}
+
+
+/* ---------- Sections ---------- */
+
+.controls-section,
+.charts-section,
+.report-section {
+    margin-top: 40px;
+
+    position: relative;
+}
+
+.section-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 16px;
+
+    padding-bottom: 9px;
+
+    border-bottom:
+        3px dashed #a9bfc4;
+}
+
+.section-header > div {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.section-header h2 {
+    margin: 0;
+
+    font-family:
+        "Comic Sans MS",
+        "Chalkboard SE",
+        "Marker Felt",
+        "Trebuchet MS",
+        cursive;
+
+    font-size: 24px;
+
+    color: #51495a;
+
+    letter-spacing: 0.3px;
+
+    transform: rotate(0.5deg);
+}
+
+.section-icon {
+    font-size: 27px;
+}
+
+
+/* ---------- Little notebook pencil ---------- */
+
+.controls-section::before {
+    content: "✎";
+
+    position: absolute;
+
+    left: -29px;
+    top: 3px;
+
+    font-size: 21px;
+
+    color: #d48a99;
+
+    transform: rotate(-15deg);
+
+    z-index: 2;
+}
+
+
+/* ---------- Little star ---------- */
+
+.charts-section::after {
+    content: "★";
+
+    position: absolute;
+
+    right: 8px;
+    top: -8px;
+
+    font-size: 20px;
+
+    color: #e6bd52;
+
+    transform: rotate(12deg);
+
+    z-index: 2;
+}
+
+
+/* ---------- Controls table ---------- */
+
+.controls-table-container {
+    background: #ffffff;
+
+    padding: 13px 17px;
+
+    border: 3px solid #c7dfe5;
+
+    border-radius:
+        18px 21px 17px 20px;
+
+    box-shadow:
+        5px 6px 0 #dce7e8;
+
+    transform: rotate(-0.1deg);
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+thead th {
+    color: #766e78;
+
+    font-size: 13px;
+
+    padding: 11px 10px;
+
+    text-align: left;
+
+    border-bottom:
+        3px dashed #b7cdd2;
+}
+
+tbody tr {
+    border-bottom:
+        2px dotted #d7dfe1;
+}
+
+tbody tr:nth-child(even) {
+    background: #fff9df;
+}
+
+tbody td {
+    padding: 13px 10px;
+}
+
+tbody tr:last-child {
+    border-bottom: none;
+}
+
+.button-small {
+    padding: 6px 10px;
+
+    font-size: 12px;
+
+    border-radius:
+        6px 8px 5px 7px;
+}
+
+
+/* ---------- Growth charts ---------- */
+
+.chart-card {
+    background: #ffffff;
+
+    border: 3px solid #d5e3e7;
+
+    border-radius:
+        22px 18px 24px 20px;
+
+    padding: 22px;
+
+    margin-bottom: 23px;
+
+    box-shadow:
+        5px 6px 0 #dfe8e9;
+}
+
+.chart-card:nth-child(2) {
+    transform:
+        rotate(0.15deg);
+}
+
+.chart-card:nth-child(3) {
+    transform:
+        rotate(-0.15deg);
+}
+
+.chart-card h3 {
+    margin: 0 0 15px;
+
+    font-family:
+        "Comic Sans MS",
+        "Chalkboard SE",
+        "Marker Felt",
+        "Trebuchet MS",
+        cursive;
+
+    color: #5a5360;
+
+    font-size: 19px;
+
+    transform:
+        rotate(-0.4deg);
+}
+
+.chart-placeholder {
+    min-height: 250px;
+
+    background: #f8fbff;
+
+    border:
+        3px dashed #a9d1de;
+
+    border-radius:
+        15px 18px 14px 17px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #91a8b1;
+
+    font-weight: bold;
+}
+
+
+/* ---------- Report ---------- */
+
+.report-card {
+    background: #ffe5ef;
+
+    border:
+        3px solid #efb9ce;
+
+    border-radius:
+        20px 24px 18px 22px;
+
+    padding: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    box-shadow:
+        5px 6px 0 #e8c2d1;
+
+    transform:
+        rotate(0.2deg);
+}
+
+.report-icon {
+    font-size: 45px;
+}
+
+.report-card div {
+    flex: 1;
+}
+
+.report-card h2 {
+    margin: 0 0 6px;
+
+    font-family:
+        "Comic Sans MS",
+        "Chalkboard SE",
+        "Marker Felt",
+        "Trebuchet MS",
+        cursive;
+
+    color: #594c55;
+
+    transform:
+        rotate(-0.3deg);
+}
+
+.report-card p {
+    margin: 0;
+
+    color: #776c74;
+
+    line-height: 1.5;
+}
+
+
+/* ---------- Footer ---------- */
+
+.app-footer {
+    margin-top: 48px;
+
+    padding: 25px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    color: #817781;
+}
+
+.app-footer span {
+    font-size: 24px;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 750px) {
+
+    body::before {
+        left: 12px;
+    }
+
+    .app-header {
+        flex-direction: column;
+
+        gap: 20px;
+
+        text-align: center;
+    }
+
+    .logo-area {
+        flex-direction: column;
+    }
+
+    .main-navigation {
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    .child-header {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .child-actions {
+        justify-content: center;
+
+        flex-wrap: wrap;
+    }
+
+    .health-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .report-card {
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .controls-section::before {
+        display: none;
+    }
+}
