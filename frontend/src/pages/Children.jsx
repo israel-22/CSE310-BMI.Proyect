@@ -91,6 +91,7 @@ function Children() {
         }
     }
 
+
     async function handleUpdate() {
 
         if (!editingChild) {
@@ -140,6 +141,7 @@ function Children() {
         }
     }
 
+
     async function handleDelete() {
 
         if (!editingChild) {
@@ -183,178 +185,253 @@ function Children() {
         }
     }
 
+
     return (
-        <div>
-            <h1>Children</h1>
-            <h2>New Child</h2>
+        <main className="children-page">
 
-            <form onSubmit={handleSubmit}>
+            <section className="page-heading">
+                <h1>Children</h1>
+                <p>Child registration and information</p>
+            </section>
 
-                <div>
-                    <label>
-                        Identification
-                    </label>
 
-                    <input
-                        type="text"
-                        value={identification}
-                        onChange={event => setIdentification(event.target.value)}
-                        required
-                    />
+            <section className="child-form-section">
+
+                <div className="section-heading">
+                    <h2>New Child</h2>
                 </div>
 
-                <div>
-                    <label>
-                        First Name
-                    </label>
 
-                    <input
-                        type="text"
-                        value={firstName}
-                        onChange={event => setFirstName(event.target.value)}
-                        required
-                    />
-                </div>
+                <form
+                    className="child-form"
+                    onSubmit={handleSubmit}
+                >
 
-                <div>
-                    <label>
-                        Last Name
-                    </label>
-
-                    <input
-                        type="text"
-                        value={lastName}
-                        onChange={event => setLastName(event.target.value)}
-                        required
-                    />
-                </div>
-
-                <div>
-                    <label>
-                        Birth Date
-                    </label>
-
-                    <input
-                        type="date"
-                        value={birthDate}
-                        onChange={event => setBirthDate(event.target.value)}
-                        required
-                    />
-                </div>
-
-                <div>
-                    <label>
-                        Gender
-                    </label>
-
-                    <div>
+                    <div className="form-field">
                         <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="Male"
-                                checked={gender === 'Male'}
-                                onChange={event => setGender(event.target.value)}
-                                required
-                            />
-                            Male
+                            Identification
                         </label>
+
+                        <input
+                            type="text"
+                            value={identification}
+                            onChange={event => setIdentification(event.target.value)}
+                            required
+                        />
                     </div>
 
-                    <div>
+
+                    <div className="form-field">
                         <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                value="Female"
-                                checked={gender === 'Female'}
-                                onChange={event => setGender(event.target.value)}
-                            />
-                            Female
+                            First Name
                         </label>
+
+                        <input
+                            type="text"
+                            value={firstName}
+                            onChange={event => setFirstName(event.target.value)}
+                            required
+                        />
                     </div>
-                </div>
 
-                <div>
-                    <label>
-                        Family History
-                    </label>
 
-                    <textarea
-                        value={familyHistory}
-                        onChange={event => setFamilyHistory(event.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>
-                        Personal History
-                    </label>
+                    <div className="form-field">
+                        <label>
+                            Last Name
+                        </label>
 
-                    <textarea
-                        value={personalHistory}
-                        onChange={event => setPersonalHistory(event.target.value)}
-                    />
-                </div>
+                        <input
+                            type="text"
+                            value={lastName}
+                            onChange={event => setLastName(event.target.value)}
+                            required
+                        />
+                    </div>
 
-                <button type="submit">
-                    Save Child
-                </button>
-                <button
-                    type="button"
-                    disabled={!editingChild}
-                    onClick={handleUpdate}
-                >
-                    Update Child
-                </button>
 
-                <button
-                    type="button"
-                    disabled={!editingChild}
-                    onClick={handleDelete}
-                >
-                    Delete Child
-                </button>
+                    <div className="form-field">
+                        <label>
+                            Birth Date
+                        </label>
 
-            </form>
+                        <input
+                            type="date"
+                            value={birthDate}
+                            onChange={event => setBirthDate(event.target.value)}
+                            required
+                        />
+                    </div>
 
-            {children.map(child => (
-                <div key={child.identification}>
 
-                    <p
-                    onClick={() => {
-                        console.log(child)
-                        setEditingChild(child)
-                        setIdentification(child.identification)
-                        setFirstName(child.firstName)
-                        setLastName(child.lastName)
-                        setBirthDate(child.birthDate ?? '')
-                        setGender(child.gender ?? '')
-                        setFamilyHistory(child.familyHistory ?? '')
-                        setPersonalHistory(child.personalHistory ?? '')
+                    <div className="form-field gender-field">
 
-                    }}
+                        <label>
+                            Gender
+                        </label>
 
-                        style={{ cursor: 'pointer' } }
+                        <div className="gender-options">
 
-                     >
-                        <strong>{child.identification}</strong>
-                        {' - '}
-                        {child.firstName} {child.lastName}
-                        {' - '}
-                            {child.birthDate}
-                    </p>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Male"
+                                    checked={gender === 'Male'}
+                                    onChange={event => setGender(event.target.value)}
+                                    required
+                                />
+                                Male
+                            </label>
 
-                    <Link to={`/child-record?id=${child.identification}`}>
-                        <button type="button">
-                            Open Record
+
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="gender"
+                                    value="Female"
+                                    checked={gender === 'Female'}
+                                    onChange={event => setGender(event.target.value)}
+                                />
+                                Female
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div className="form-field form-field-wide">
+                        <label>
+                            Family History
+                        </label>
+
+                        <textarea
+                            value={familyHistory}
+                            onChange={event => setFamilyHistory(event.target.value)}
+                        />
+                    </div>
+
+
+                    <div className="form-field form-field-wide">
+                        <label>
+                            Personal History
+                        </label>
+
+                        <textarea
+                            value={personalHistory}
+                            onChange={event => setPersonalHistory(event.target.value)}
+                        />
+                    </div>
+
+
+                    <div className="form-actions">
+
+                        <button
+                            className="button-primary"
+                            type="submit"
+                        >
+                            Save Child
                         </button>
-                    </Link>
 
-                    <hr />
+
+                        <button
+                            className="button-edit"
+                            type="button"
+                            disabled={!editingChild}
+                            onClick={handleUpdate}
+                        >
+                            Update Child
+                        </button>
+
+
+                        <button
+                            className="button-delete"
+                            type="button"
+                            disabled={!editingChild}
+                            onClick={handleDelete}
+                        >
+                            Delete Child
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+
+            <section className="children-list-section">
+
+                <div className="section-heading">
+                    <h2>Registered Children</h2>
+                </div>
+
+
+                <div className="children-list">
+
+                    {children.map(child => (
+
+                        <article
+                            className="child-list-item"
+                            key={child.identification}
+                        >
+
+                            <div
+                                className="child-list-information"
+                                onClick={() => {
+
+                                    console.log(child)
+
+                                    setEditingChild(child)
+                                    setIdentification(child.identification)
+                                    setFirstName(child.firstName)
+                                    setLastName(child.lastName)
+                                    setBirthDate(child.birthDate ?? '')
+                                    setGender(child.gender ?? '')
+                                    setFamilyHistory(child.familyHistory ?? '')
+                                    setPersonalHistory(child.personalHistory ?? '')
+
+                                }}
+                            >
+
+                                <p className="child-identification">
+                                    <strong>
+                                        {child.identification}
+                                    </strong>
+                                </p>
+
+                                <p className="child-name">
+                                    {child.firstName} {child.lastName}
+                                </p>
+
+                                <p className="child-birth-date">
+                                    {child.birthDate}
+                                </p>
+
+                            </div>
+
+
+                            <Link
+                                className="child-record-link"
+                                to={`/child-record?id=${child.identification}`}
+                            >
+                                <button
+                                    className="button-primary"
+                                    type="button"
+                                >
+                                    Open Record
+                                </button>
+                            </Link>
+
+                        </article>
+
+                    ))}
 
                 </div>
-            ))}
-        </div>
+
+            </section>
+
+        </main>
     )
 }
 

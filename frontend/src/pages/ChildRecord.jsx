@@ -47,120 +47,205 @@ function ChildRecord() {
         return <p>Loading child...</p>
     }
 
+return (
+    <main className="child-record-page">
 
-    return (
-        <div>
+        <section className="child-record-header">
 
-            <h1>Child Record</h1>
+            <div className="page-heading">
+                <h1>Child Record</h1>
+                <p>Growth monitoring and health information</p>
+            </div>
+
+            <div className="child-information-card">
+
+                <div className="child-information-item">
+                    <span className="information-label">
+                        Identification
+                    </span>
+
+                    <span className="information-value">
+                        {child.identification}
+                    </span>
+                </div>
+
+                <div className="child-information-item">
+                    <span className="information-label">
+                        First Name
+                    </span>
+
+                    <span className="information-value">
+                        {child.firstName}
+                    </span>
+                </div>
+
+                <div className="child-information-item">
+                    <span className="information-label">
+                        Last Name
+                    </span>
+
+                    <span className="information-value">
+                        {child.lastName}
+                    </span>
+                </div>
+
+                <div className="child-information-item">
+                    <span className="information-label">
+                        Birth Date
+                    </span>
+
+                    <span className="information-value">
+                        {child.birthDate}
+                    </span>
+                </div>
+
+                <div className="child-information-item">
+                    <span className="information-label">
+                        Gender
+                    </span>
+
+                    <span className="information-value">
+                        {child.gender}
+                    </span>
+                </div>
+
+            </div>
+
+            <div className="report-action">
+
+                <button
+                    type="button"
+                    className="button-primary"
+                    onClick={() => {
+                        window.open(
+                            `/api/children/${child.identification}/report`,
+                            '_blank'
+                        )
+                    }}
+                >
+                    Generate PDF Report
+                </button>
+
+            </div>
+
+        </section>
 
 
-            <p>
-                <strong>Identification:</strong> {child.identification}
-            </p>
+        <section className="control-form-section">
 
-            <p>
-                <strong>First Name:</strong> {child.firstName}
-            </p>
+            <div className="section-heading">
+                <h2>New Control</h2>
+            </div>
 
-            <p>
-                <strong>Last Name:</strong> {child.lastName}
-            </p>
+            <ControlForm
+                key={editingControl?.id ?? 'new-control'}
+                identification={identification}
+                editingControl={editingControl}
+                onControlCreated={savedControl => {
+                    setControls(previousControls => {
 
-            <p>
-                <strong>Birth Date:</strong> {child.birthDate}
-            </p>
+                        const exists = previousControls.some(
+                            control =>
+                                String(control.id) ===
+                                String(savedControl.id)
+                        )
 
-            <p>
-                <strong>Gender:</strong> {child.gender}
-            </p>
+                        if (exists) {
 
-            <button
-                type="button"
-                onClick={() => {
-                    window.open(
-                        `/api/children/${child.identification}/report`,
-                        '_blank'
-                    )
+                            return previousControls.map(control =>
+                                String(control.id) ===
+                                String(savedControl.id)
+                                    ? savedControl
+                                    : control
+                            )
+
+                        }
+
+                        return [
+                            ...previousControls,
+                            savedControl
+                        ]
+
+                    })
                 }}
-            >
-                Generate PDF Report
-            </button>
+            />
 
-          <ControlForm
-              key={editingControl?.id ?? 'new-control'}
-              identification={identification}
-              editingControl={editingControl}
-              onControlCreated={savedControl => {
-                  setControls(previousControls => {
-
-                      const exists = previousControls.some(
-                          control => String(control.id) === String(savedControl.id)
-                      )
-                      if (exists) {
-                          return previousControls.map(control =>
-                              String(control.id) === String(savedControl.id)
-                                  ? savedControl
-                                  : control
-                          )
-                      }
-
-                      return [
-                          ...previousControls,
-                          savedControl
-                      ]
-                  })
-              }}
-          />
+        </section>
 
 
-           <h2>Controls</h2>
+        <section className="controls-section">
 
-           <ControlList
-               controls={controls}
+            <div className="section-heading">
+                <h2>Controls</h2>
+            </div>
 
-               onEdit={async controlId => {
+            <ControlList
+                controls={controls}
 
-                   try {
+                onEdit={async controlId => {
 
-                       const selectedControl = await getControl(controlId)
+                    try {
 
-                       setEditingControl(selectedControl)
+                        const selectedControl =
+                            await getControl(controlId)
 
-                   } catch (error) {
+                        setEditingControl(selectedControl)
 
-                       console.error('Error loading control:', error)
+                    } catch (error) {
 
-                   }
+                        console.error(
+                            'Error loading control:',
+                            error
+                        )
 
-               }}
+                    }
 
-               onDelete={async controlId => {
+                }}
 
-                   try {
+                onDelete={async controlId => {
 
-                       await deleteControl(controlId)
+                    try {
 
-                       setControls(previousControls =>
-                           previousControls.filter(
-                               control => String(control.id) !== String(controlId)
-                           )
-                       )
+                        await deleteControl(controlId)
 
-                   } catch (error) {
+                        setControls(previousControls =>
+                            previousControls.filter(
+                                control =>
+                                    String(control.id) !==
+                                    String(controlId)
+                            )
+                        )
 
-                       console.error('Error deleting control:', error)
+                    } catch (error) {
 
-                   }
+                        console.error(
+                            'Error deleting control:',
+                            error
+                        )
 
-               }}
-           />
-           <GrowthChart
-           child={child}
-           controls={controls}
-           />
+                    }
 
-        </div>
-    )
+                }}
+            />
+
+        </section>
+
+
+        <section className="growth-charts-section">
+
+            <div className="section-heading">
+                <h2>Growth Charts</h2>
+            </div>
+
+            <GrowthChart
+                child={child}
+                controls={controls}
+            />
+
+        </section>
+
+    </main>
+)
 }
 
 export default ChildRecord

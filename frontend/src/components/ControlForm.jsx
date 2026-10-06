@@ -139,11 +139,14 @@ function ControlForm({
     }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form
+            className="control-form"
+            onSubmit={handleSubmit}
+        >
 
             <h2>New Control</h2>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Control Date
                 </label>
@@ -156,7 +159,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Weight (kg)
                 </label>
@@ -170,7 +173,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Height (cm)
                 </label>
@@ -184,7 +187,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Head Circumference (cm)
                 </label>
@@ -197,7 +200,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Thoracic Circumference (cm)
                 </label>
@@ -210,7 +213,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Abdominal Circumference (cm)
                 </label>
@@ -223,7 +226,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Heart Rate (bpm)
                 </label>
@@ -235,7 +238,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Respiratory Rate (breaths/min)
                 </label>
@@ -247,7 +250,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Oxygen Saturation (%)
                 </label>
@@ -259,7 +262,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Temperature (°C)
                 </label>
@@ -272,7 +275,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Hemoglobin (g/dL)
                 </label>
@@ -285,7 +288,7 @@ function ControlForm({
                 />
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Diet
                 </label>
@@ -302,7 +305,7 @@ function ControlForm({
                 </select>
             </div>
 
-            <div>
+            <div className="control-form-field">
                 <label>
                     Meals per Day
                 </label>
@@ -321,7 +324,10 @@ function ControlForm({
                 </select>
             </div>
 
-            <button type="submit">
+            <button
+                type="submit"
+                className="button-primary"
+            >
                 Save Control
             </button>
 

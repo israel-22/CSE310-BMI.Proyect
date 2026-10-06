@@ -7,13 +7,17 @@ function ControlList({
     if (controls.length === 0) {
         return <p>No controls recorded.</p>
     }
+return (
+    <div className="control-list">
 
-    return (
-        <div>
+        {controls.map(control => (
 
-            {controls.map(control => (
+            <div
+                key={control.id}
+                className="control-card"
+            >
 
-                <div key={control.id}>
+                <div className="control-information">
 
                     <p>
                         <strong>Control Date:</strong>{' '}
@@ -100,30 +104,34 @@ function ControlList({
                         {control.bmiForAgeResult}
                     </p>
 
+                </div>
+
+
+                <div className="control-actions">
+
                     <button
                         type="button"
+                        className="button-edit"
                         onClick={() => onEdit(control.id)}
                     >
                         Edit
                     </button>
 
-                    <br />
-
                     <button
                         type="button"
+                        className="button-delete"
                         onClick={() => onDelete(control.id)}
                     >
                         Delete
                     </button>
 
-                    <hr />
-
                 </div>
 
-            ))}
+            </div>
 
-        </div>
-    )
+        ))}
+
+    </div>
+)
 }
-
 export default ControlList
