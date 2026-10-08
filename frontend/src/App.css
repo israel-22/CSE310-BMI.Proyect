@@ -1130,3 +1130,148 @@
 .control-actions .button-delete {
     min-width: 85px;
 }
+/* =========================================================
+   Back to Children Button
+   ========================================================= */
+
+.button-back-children {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 20px;
+    padding: 10px 18px;
+
+    background: #d9b8ff;
+
+    color: #59406f;
+
+    border: 3px solid #b88ce8;
+    border-radius: 999px;
+
+    box-shadow: 4px 4px 0 #b88ce8;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.button-back-children:hover {
+    transform: translateY(-2px);
+
+    box-shadow: 5px 6px 0 #b88ce8;
+}
+
+.button-back-children:active {
+    transform: translateY(2px);
+
+    box-shadow: 2px 2px 0 #b88ce8;
+}
+/* =========================================================
+   Child Record
+   Responsive Improvements
+   ========================================================= */
+
+@media (max-width: 750px) {
+
+    .child-record-page {
+        width: 92%;
+        margin: 30px auto 50px;
+    }
+
+    .child-record-header {
+        margin-bottom: 25px;
+    }
+
+    .child-information-card {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 17px;
+    }
+
+    .child-information-item {
+        min-height: auto;
+    }
+
+    .report-action {
+        justify-content: flex-start;
+    }
+
+    .report-action .button-primary {
+        width: 100%;
+    }
+
+    .control-form-section,
+    .controls-section,
+    .growth-charts-section {
+        padding: 18px;
+    }
+
+    .control-form {
+        grid-template-columns: 1fr;
+    }
+
+    .control-form .button-primary {
+        grid-column: auto;
+        justify-self: stretch;
+        width: 100%;
+    }
+
+    .control-card {
+        padding: 16px;
+    }
+
+    .control-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .control-actions button {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .growth-charts-section .chart-container {
+        padding: 12px;
+        overflow-x: auto;
+    }
+
+    .button-back-children {
+        margin-bottom: 15px;
+    }
+}
+/* =========================================================
+   Soft Entrance Animations
+   ========================================================= */
+
+@keyframes notebookAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.children-page,
+.child-record-page {
+    animation: notebookAppear 0.45s ease-out;
+}
+
+.child-form-section,
+.children-list-section,
+.child-record-header,
+.control-form-section,
+.controls-section,
+.growth-charts-section {
+    animation: notebookAppear 0.5s ease-out both;
+}

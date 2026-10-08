@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import {
        getChild,
        getChildControls,
@@ -14,7 +14,7 @@ function ChildRecord() {
 
     const [searchParams] = useSearchParams()
     const identification = searchParams.get('id')
-
+    const navigate = useNavigate()
     const [child, setChild] = useState(null)
     const [controls, setControls] = useState([])
     const [editingControl, setEditingControl] = useState(null)
@@ -49,6 +49,13 @@ function ChildRecord() {
 
 return (
     <main className="child-record-page">
+    <button
+        type="button"
+        className="button-back-children"
+        onClick={() => navigate('/children')}
+    >
+        ← Back to Children
+    </button>
 
         <section className="child-record-header">
 
