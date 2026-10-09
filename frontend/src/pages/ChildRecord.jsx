@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import {
-       getChild,
-       getChildControls,
-       getControl,
-       deleteControl
+getChild,
+getChildControls,
+getControl,
+deleteControl
 } from '../services/api'
 import ControlForm from '../components/ControlForm'
 import ControlList from '../components/ControlList'
@@ -12,50 +12,61 @@ import GrowthChart from '../components/GrowthChart'
 
 function ChildRecord() {
 
-    const [searchParams] = useSearchParams()
-    const identification = searchParams.get('id')
-    const navigate = useNavigate()
-    const [child, setChild] = useState(null)
-    const [controls, setControls] = useState([])
-    const [editingControl, setEditingControl] = useState(null)
 
-    useEffect(() => {
+const [searchParams] = useSearchParams()
+const identification = searchParams.get('id')
+const navigate = useNavigate()
 
-        async function loadData() {
+const [child, setChild] = useState(null)
+const [controls, setControls] = useState([])
+const [editingControl, setEditingControl] = useState(null)
+const [notice, setNotice] = useState('')
 
-            try {
+useEffect(() => {
+    if (!notice) return
 
-                const childData = await getChild(identification)
-                const controlsData = await getChildControls(identification)
+    const timeoutId = setTimeout(() => {
+        setNotice('')
+    }, 3000)
 
-                setChild(childData)
-                setControls(controlsData)
+    return () => clearTimeout(timeoutId)
+}, [notice])
 
-            } catch (error) {
-                console.error('Error loading child record:', error)
-            }
+useEffect(() => {
 
+    async function loadData() {
+        try {
+            const childData = await getChild(identification)
+            const controlsData = await getChildControls(identification)
+
+            setChild(childData)
+            setControls(controlsData)
+
+        } catch (error) {
+            console.error('Error loading child record:', error)
         }
-
-        if (identification) {
-            loadData()
-        }
-
-    }, [identification])
-
-    if (!child) {
-        return <p>Loading child...</p>
     }
+
+    if (identification) {
+        loadData()
+    }
+
+}, [identification])
+
+if (!child) {
+    return <p>Loading child...</p>
+}
 
 return (
     <main className="child-record-page">
-    <button
-        type="button"
-        className="button-back-children"
-        onClick={() => navigate('/children')}
-    >
-        ← Back to Children
-    </button>
+
+        <button
+            type="button"
+            className="button-back-children"
+            onClick={() => navigate('/children')}
+        >
+            ← Back to Children
+        </button>
 
         <section className="child-record-header">
 
@@ -70,7 +81,6 @@ return (
                     <span className="information-label">
                         Identification
                     </span>
-
                     <span className="information-value">
                         {child.identification}
                     </span>
@@ -80,7 +90,6 @@ return (
                     <span className="information-label">
                         First Name
                     </span>
-
                     <span className="information-value">
                         {child.firstName}
                     </span>
@@ -90,7 +99,6 @@ return (
                     <span className="information-label">
                         Last Name
                     </span>
-
                     <span className="information-value">
                         {child.lastName}
                     </span>
@@ -100,7 +108,6 @@ return (
                     <span className="information-label">
                         Birth Date
                     </span>
-
                     <span className="information-value">
                         {child.birthDate}
                     </span>
@@ -110,7 +117,6 @@ return (
                     <span className="information-label">
                         Gender
                     </span>
-
                     <span className="information-value">
                         {child.gender}
                     </span>
@@ -119,7 +125,6 @@ return (
             </div>
 
             <div className="report-action">
-
                 <button
                     type="button"
                     className="button-primary"
@@ -132,23 +137,34 @@ return (
                 >
                     Generate PDF Report
                 </button>
-
             </div>
 
         </section>
 
-
         <section className="control-form-section">
 
             <div className="section-heading">
-                <h2>New Control</h2>
+                <h2>
+                    {editingControl ? 'Edit Control' : 'New Control'}
+                </h2>
             </div>
+
+            {notice && (
+                <p
+                    className="control-notice"
+                    role="status"
+                    aria-live="polite"
+                >
+                    {notice}
+                </p>
+            )}
 
             <ControlForm
                 key={editingControl?.id ?? 'new-control'}
                 identification={identification}
                 editingControl={editingControl}
-                onControlCreated={savedControl => {
+                onControlCreated={(savedControl, wasEditing) => {
+
                     setControls(previousControls => {
 
                         const exists = previousControls.some(
@@ -158,27 +174,35 @@ return (
                         )
 
                         if (exists) {
-
                             return previousControls.map(control =>
                                 String(control.id) ===
                                 String(savedControl.id)
                                     ? savedControl
                                     : control
                             )
-
                         }
 
                         return [
                             ...previousControls,
                             savedControl
                         ]
-
                     })
+
+                    setEditingControl(null)
+
+                    setNotice(
+                        wasEditing
+                            ? '✨ Growth control updated successfully!'
+                            : '🎉 Growth control saved successfully!'
+                    )
                 }}
+                 onCancelEdit={() => {
+                                    setEditingControl(null)
+                                    setNotice('')
+                                }}
             />
 
         </section>
-
 
         <section className="controls-section">
 
@@ -190,29 +214,23 @@ return (
                 controls={controls}
 
                 onEdit={async controlId => {
-
                     try {
-
                         const selectedControl =
                             await getControl(controlId)
 
+                        setNotice('')
                         setEditingControl(selectedControl)
 
                     } catch (error) {
-
                         console.error(
                             'Error loading control:',
                             error
                         )
-
                     }
-
                 }}
 
                 onDelete={async controlId => {
-
                     try {
-
                         await deleteControl(controlId)
 
                         setControls(previousControls =>
@@ -223,20 +241,19 @@ return (
                             )
                         )
 
-                    } catch (error) {
+                        setNotice('🗑️ Growth control deleted successfully!')
 
+                    } catch (error) {
                         console.error(
                             'Error deleting control:',
                             error
                         )
-
                     }
-
                 }}
+
             />
 
         </section>
-
 
         <section className="growth-charts-section">
 
@@ -253,6 +270,8 @@ return (
 
     </main>
 )
+
+
 }
 
 export default ChildRecord

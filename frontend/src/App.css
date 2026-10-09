@@ -1275,3 +1275,227 @@
 .growth-charts-section {
     animation: notebookAppear 0.5s ease-out both;
 }
+
+/* ---------- Successful save notification ---------- */
+
+.control-notice {
+    grid-column: 1 / -1;
+
+    margin: 0;
+    padding: 12px 16px;
+
+    color: #41634d;
+    background: #e2f8e9;
+
+    border: 2px solid #78b28f;
+    border-radius: 12px;
+
+    box-shadow: 3px 3px 0 #b9dfc5;
+
+    font-weight: bold;
+    text-align: center;
+
+
+}
+
+/* ---------- Playful success notification ---------- */
+
+.control-notice {
+grid-column: 1 / -1;
+
+
+margin: 0;
+padding: 12px 16px;
+
+color: #41634d;
+background: #e2f8e9;
+
+border: 2px solid #78b28f;
+border-radius: 16px;
+
+box-shadow: 3px 4px 0 #b9dfc5;
+
+font-weight: bold;
+text-align: center;
+
+transform-origin: center;
+animation: jellyFade 3s ease-in-out both;
+
+
+}
+
+@keyframes jellyFade {
+0% {
+opacity: 0;
+transform: translateY(-12px) scale(0.8);
+}
+
+
+8% {
+    opacity: 1;
+    transform: translateY(0) scale(1.08);
+}
+
+14% {
+    transform: scale(0.94) rotate(-3deg);
+}
+
+20% {
+    transform: scale(1.04) rotate(3deg);
+}
+
+26% {
+    transform: scale(0.98) rotate(-1.5deg);
+}
+
+32% {
+    transform: scale(1) rotate(0deg);
+}
+
+80% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+100% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+}
+
+
+}
+
+
+
+/* Update Child: blue pastel in every state */
+.form-actions .button-edit {
+background: #c9e8ff;
+color: #496276;
+border: 3px solid #82abc6;
+box-shadow: 3px 3px 0 #82abc6;
+}
+
+/* Keep Update Child blue when disabled */
+.form-actions .button-edit:disabled {
+background: #c9e8ff;
+color: #496276;
+border-color: #82abc6;
+opacity: 0.45;
+cursor: not-allowed;
+transform: none;
+box-shadow: 2px 2px 0 #c7c7c7;
+}
+
+/* Blue hover effect when enabled */
+.form-actions .button-edit:not(:disabled):hover {
+background: #b8dfff;
+transform: translate(1px, 1px);
+box-shadow: 2px 2px 0 #82abc6;
+}
+
+/* Cancel Edit: yogurt purple */
+.form-actions .button-cancel-edit {
+background: #d9b8ff;
+color: #59406f;
+border: 3px solid #b88ce8;
+border-radius: 999px;
+box-shadow: 4px 4px 0 #b88ce8;
+padding: 10px 18px;
+font-family: inherit;
+font-weight: bold;
+cursor: pointer;
+transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-actions .button-cancel-edit:hover {
+transform: translateY(-2px);
+box-shadow: 5px 6px 0 #b88ce8;
+}
+
+.form-actions .button-cancel-edit:active {
+transform: translateY(2px);
+box-shadow: 2px 2px 0 #b88ce8;
+}
+
+/* Cancel Edit: Control Form */
+.control-form .button-cancel-edit {
+    padding: 10px 18px;
+    color: #59406f;
+    background: #d9b8ff;
+    border: 3px solid #b88ce8;
+    border-radius: 999px;
+    box-shadow: 4px 4px 0 #b88ce8;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.control-form .button-cancel-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 5px 6px 0 #b88ce8;
+}
+
+.control-form .button-cancel-edit:active {
+    transform: translateY(2px);
+    box-shadow: 2px 2px 0 #b88ce8;
+}
+.control-form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+.control-form-actions .button-cancel-edit {
+    border-radius: 8px 6px 9px 7px;
+}
+
+@media (max-width: 750px) {
+    .control-form-actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+}
+
+/* =========================================================
+   Notebook Paper Details
+   ========================================================= */
+
+.child-list-item {
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 25px,
+        rgba(120, 140, 150, 0.12) 26px,
+        transparent 27px
+    );
+
+    background-size: 100% 27px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.child-list-item:nth-child(even) {
+    background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 25px,
+        rgba(100, 150, 190, 0.14) 26px,
+        transparent 27px
+    );
+}
+
+.child-list-item:hover {
+    transform: translateY(-2px) rotate(-0.15deg);
+    box-shadow: 5px 7px 0 #d8c27b;
+}
+
+.child-list-item:nth-child(even):hover {
+    transform: translateY(-2px) rotate(0.2deg);
+    box-shadow: 5px 7px 0 #9dc7d9;
+}

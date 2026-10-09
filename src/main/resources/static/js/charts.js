@@ -1205,10 +1205,11 @@ function addWeightForAgePoint(control) {
         console.error('Calculated Point dataset not found');
         return;
     }
-    calculatedDataset.borderColor = 'blue';
-    calculatedDataset.backgroundColor = 'blue';
-    calculatedDataset.pointBackgroundColor = 'blue';
-    calculatedDataset.pointBorderColor = 'blue';
+
+calculatedDataset.borderColor = 'rgba(59, 130, 246, 0.8)';
+calculatedDataset.backgroundColor = 'rgba(59, 130, 246, 0.25)';
+calculatedDataset.pointBackgroundColor = 'rgba(59, 130, 246, 0.55)';
+calculatedDataset.pointBorderColor = 'rgba(59, 130, 246, 0.9)';
 
     calculatedDataset.data.push({
         x: ageInYears,
@@ -1236,6 +1237,13 @@ function addHeightForAgePoint(control) {
             ? heightForAgeGirlsChart
             : heightForAgeBoysChart;
 
+const calculatedDataset = chart.data.datasets[5];
+
+calculatedDataset.borderColor = 'rgba(59, 130, 246, 0.8)';
+calculatedDataset.backgroundColor = 'rgba(59, 130, 246, 0.25)';
+calculatedDataset.pointBackgroundColor = 'rgba(59, 130, 246, 0.55)';
+calculatedDataset.pointBorderColor = 'rgba(59, 130, 246, 0.9)';
+
     chart.data.datasets[5].data.push({
         x: ageInYears,
         y: control.height,
@@ -1261,6 +1269,14 @@ function addBmiForAgePoint(control) {
         control.child.gender === 'Female'
             ? bmiForAgeGirlsChart
             : bmiForAgeBoysChart;
+
+
+const calculatedDataset = chart.data.datasets[5];
+
+calculatedDataset.borderColor = 'rgba(59, 130, 246, 0.8)';
+calculatedDataset.backgroundColor = 'rgba(59, 130, 246, 0.25)';
+calculatedDataset.pointBackgroundColor = 'rgba(59, 130, 246, 0.55)';
+calculatedDataset.pointBorderColor = 'rgba(59, 130, 246, 0.9)';
 
     chart.data.datasets[5].data.push({
         x: ageInYears,

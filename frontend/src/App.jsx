@@ -3,6 +3,7 @@ import Children from './pages/Children'
 import ChildRecord from './pages/ChildRecord'
 import './App.css'
 
+// Defines the main application routes.
 function App() {
     return (
         <BrowserRouter>
