@@ -42,7 +42,7 @@ The MySQL database must also be configured and available according to the applic
 
 ### Software Demo Video
 
-[Software Demo Video](https://www.youtube.com/watch?v=REPLACE_WITH_VIDEO_ID)
+[Software Demo Video](https://drive.google.com/file/d/18z-My64en6vyKhbduniSBN-SMP2o00OT/view?usp=drive_link)
 
 Replace the placeholder URL with the actual video link after publishing the demonstration.
 
